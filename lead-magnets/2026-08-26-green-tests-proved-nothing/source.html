@@ -5,16 +5,19 @@
 <title>Five Checks That Lie</title>
 <style>
   /*
-    Re-cut onto the DEV-2187 lead-magnet house style (_templates/lead-magnet.html).
+    Re-cut onto the DEV-2187 lead-magnet house style, round 3.
     One-page checklist variant. Renderer: headless Chrome print-to-pdf (Skia/PDF).
+    Register pass: rewritten for a non-technical professional audience -- see
+    _templates/lead-magnet-style-note.md for the system this inherits.
   */
 
   @page {
     size: A4;
-    margin: 0.65in 0.8in;
+    margin: 0;
   }
 
   :root {
+    /* ---- House palette (identical to _templates/lead-magnet.html) ---- */
     --ink:        #241f1a;
     --ink-soft:   #6b6456;
     --paper:      #faf7f1;
@@ -29,43 +32,69 @@
     --status-wait:      #b98f4f;
     --status-wait-soft: #f6ecd8;
 
+    /* ---- Identity tokens ---- */
+    --identity-byline:            "Esteban V.";
+    --identity-linkedin-url:      "https://linkedin.com/in/valest";
+    --identity-linkedin-display:  "linkedin.com/in/valest";
+    --identity-booking-url:       "https://cal.com/este-val/brief";
+    --identity-booking-display:   "cal.com/este-val/brief";
+
+    /* ---- Type ---- */
     --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
     --font-sans:  "Avenir Next", "Helvetica Neue", Helvetica, Arial, sans-serif;
 
-    --fs-micro: 7.8px;
-    --fs-small: 9.5px;
-    --fs-body:  11px;
-    --fs-lead:  12px;
-    --fs-h2:    14px;
+    --fs-micro: 7.5px;
+    --fs-small: 9px;
+    --fs-body:  10.5px;
+    --fs-lead:  11.5px;
+    --fs-h2:    13px;
     --fs-h1:    22px;
 
     --sp-xs: 4px;
-    --sp-sm: 9px;
-    --sp-md: 13px;
-    --sp-lg: 20px;
+    --sp-sm: 8px;
+    --sp-md: 14px;
+    --sp-lg: 22px;
 
     --radius-sm: 6px;
     --radius-md: 9px;
     --radius-lg: 12px;
-    --radius-pill: 20px;
     --rule: 1px solid var(--line);
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  html {
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    background: var(--paper);
+  }
 
   body {
     font-family: var(--font-serif);
     color: var(--ink);
     background: var(--paper);
     font-size: var(--fs-body);
-    line-height: 1.45;
+    line-height: 1.5;
   }
 
   a { color: var(--accent); text-decoration: none; }
 
-  .page { padding: 0; }
+  /* ---------- Page wrapper (full-bleed, per house style) ---------- */
+  .page {
+    page-break-after: always;
+    min-height: 11.69in;
+    padding: 0.7in 0.8in;
+    background: var(--paper);
+  }
+  .page:last-of-type { page-break-after: avoid; }
 
+  /* ---------- Kicker / eyebrow + dateline ---------- */
+  .kicker-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--sp-sm);
+    margin-bottom: var(--sp-sm);
+  }
   .kicker {
     font-family: var(--font-sans);
     text-transform: uppercase;
@@ -73,41 +102,50 @@
     font-size: var(--fs-micro);
     color: var(--accent);
     font-weight: 600;
-    margin-bottom: 6px;
+  }
+  .dateline {
+    font-family: var(--font-sans);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: var(--fs-micro);
+    color: var(--ink-soft);
+    font-weight: 500;
+    white-space: nowrap;
   }
 
+  /* ---------- Headline ---------- */
   h1 {
     font-size: var(--fs-h1);
     font-weight: 600;
-    line-height: 1.16;
+    line-height: 1.2;
     color: var(--ink);
   }
   h1 .accent { color: var(--accent); font-style: italic; }
 
   .intro {
-    margin-top: 6px;
+    margin-top: var(--sp-sm);
     font-style: italic;
     color: var(--ink-soft);
     font-size: var(--fs-lead);
-    line-height: 1.45;
-    max-width: 96%;
+    line-height: 1.5;
+    max-width: 94%;
   }
 
   header.doc-header {
-    padding-bottom: var(--sp-sm);
+    padding-bottom: var(--sp-md);
     border-bottom: var(--rule);
     margin-bottom: var(--sp-md);
   }
 
-  /* ---------- Checklist card ---------- */
-  .checklist {
+  /* ---------- Check card (three-part checklist) ---------- */
+  .check-card {
     background: var(--card);
     border: var(--rule);
     border-radius: var(--radius-lg);
-    padding: 13px 18px 8px;
+    padding: 17px 22px 12px;
     margin-bottom: var(--sp-md);
   }
-  .checklist h3 {
+  .check-card h3 {
     font-family: var(--font-sans);
     font-size: var(--fs-small);
     font-weight: 700;
@@ -116,15 +154,15 @@
     color: var(--accent);
     margin-bottom: 2px;
   }
-  .checklist .sub {
+  .check-card .sub {
     font-style: italic;
     color: var(--ink-soft);
     font-size: var(--fs-small);
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
 
   .check-row {
-    padding: 9px 0;
+    padding: 13px 0;
     border-bottom: var(--rule);
   }
   .check-row:last-child { border-bottom: none; }
@@ -133,7 +171,7 @@
     display: flex;
     align-items: baseline;
     gap: 9px;
-    margin-bottom: 5px;
+    margin-bottom: 6px;
   }
   .check-num {
     font-family: var(--font-sans);
@@ -152,7 +190,7 @@
   .check-detail {
     font-size: var(--fs-small);
     color: var(--ink-soft);
-    line-height: 1.5;
+    line-height: 1.55;
     margin-top: 3px;
     padding-left: 29px;
   }
@@ -164,29 +202,37 @@
     letter-spacing: 0.06em;
     color: var(--accent);
     display: inline-block;
-    width: 68px;
+    width: 66px;
   }
   .check-detail.verify .tag { color: var(--status-wait); }
   .check-detail.pass .tag { color: var(--status-done); }
 
+  /* ---------- Pull quote + escape hatch ---------- */
   .pull-line {
     font-style: italic;
-    font-size: 13px;
+    font-size: 12.5px;
     color: var(--ink);
-    margin: var(--sp-sm) 0 var(--sp-md);
-    padding: 10px 14px;
+    margin: var(--sp-md) 0 var(--sp-sm);
+    padding: 12px 16px;
     border-left: 3px solid var(--accent);
     background: var(--accent-soft);
     border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
   }
+  .escape-hatch {
+    font-size: var(--fs-small);
+    color: var(--ink-soft);
+    line-height: 1.5;
+    margin-bottom: var(--sp-md);
+  }
+  .escape-hatch b { color: var(--ink); font-weight: 600; }
 
-  /* ---------- CTA block ---------- */
+  /* ---------- CTA block (exactly two destinations) ---------- */
   .cta {
     margin-top: var(--sp-sm);
     background: var(--accent-soft);
     border: 1px solid var(--accent);
     border-radius: var(--radius-lg);
-    padding: 13px 18px 14px;
+    padding: 16px 20px 18px;
   }
   .cta .label {
     font-family: var(--font-sans);
@@ -195,23 +241,24 @@
     text-transform: uppercase;
     letter-spacing: 0.14em;
     color: var(--accent);
-    margin-bottom: 5px;
+    margin-bottom: 6px;
   }
   .cta .line {
     font-size: var(--fs-body);
-    line-height: 1.45;
-    margin-bottom: 3px;
+    line-height: 1.5;
+    margin-bottom: 4px;
   }
+  .cta .line.primary { font-weight: 500; }
   .cta .line:last-child { margin-bottom: 0; }
   .cta a { font-weight: 700; }
 
-  /* ---------- Footer ---------- */
+  /* ---------- Footer / branding ---------- */
   .doc-footer {
     margin-top: var(--sp-md);
-    padding-top: 7px;
+    padding-top: var(--sp-sm);
     border-top: var(--rule);
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: space-between;
     font-family: var(--font-sans);
     font-size: var(--fs-micro);
@@ -231,7 +278,17 @@
   }
   .doc-footer .who { display: flex; align-items: center; }
   .doc-footer .name { font-weight: 700; color: var(--ink); }
+  .doc-footer .name::before { content: var(--identity-byline); }
+  .doc-footer .links {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+  }
   .doc-footer .handle { color: var(--accent); }
+  .doc-footer .handle::before { content: var(--identity-linkedin-display); }
+  .doc-footer .booking { color: var(--accent); }
+  .doc-footer .booking::before { content: var(--identity-booking-display); }
 </style>
 </head>
 <body>
@@ -239,69 +296,77 @@
 <section class="page">
 
   <header class="doc-header">
-    <div class="kicker">A working checklist</div>
+    <div class="kicker-row">
+      <div class="kicker">A working checklist</div>
+      <div class="dateline">Field note -- 26 Aug 2026</div>
+    </div>
     <h1>Five Checks <span class="accent">That Lie</span></h1>
-    <p class="intro">Five passing checks that proved nothing, found in one person's own pipeline in
-    48 hours. Every one of them produced a real green signal. Each measured something adjacent to
-    what was actually being cared about -- a passing test proves the code behaves the way the test
-    invokes it, not that the program runs.</p>
+    <p class="intro">Five green checkmarks. None of them proved what I thought they proved. I
+    found all five in my own work, in one week -- not in someone else's.</p>
   </header>
 
-  <div class="checklist">
-    <h3>Run these against your own suite</h3>
-    <div class="sub">In order. Each one takes minutes to check, and tells you honestly whether a
-    green result means what you think it means.</div>
+  <div class="check-card">
+    <h3>Run these against your own status checks</h3>
+    <div class="sub">In order. Each takes a few minutes and tells you honestly whether a green
+    light means what you think it means.</div>
 
     <div class="check-row">
-      <div class="check-row-head"><span class="check-num">01</span><span class="check-title">The billed-API mirage</span></div>
-      <p class="check-detail"><span class="tag">Looks like</span>A suite that passes because it is quietly making real, billed calls to a live API -- it only fails in CI, where there is no key.</p>
-      <p class="check-detail verify"><span class="tag">Verify</span>Run the suite with the API key unset. If it still passes, it was never testing your logic.</p>
-      <p class="check-detail pass"><span class="tag">Real pass</span>The suite runs against a mock or fixture, no key and no network required. A separate, clearly labeled integration test covers the live call.</p>
+      <div class="check-row-head"><span class="check-num">01</span><span class="check-title">The bill only I could see</span></div>
+      <p class="check-detail"><span class="tag">Looks like</span>A check kept passing every time. It was quietly paying a real vendor for a real call, every single run.</p>
+      <p class="check-detail verify"><span class="tag">Verify</span>Cut that connection off and run the check again. If it still passes, it was never checking your work.</p>
+      <p class="check-detail pass"><span class="tag">Real pass</span>The check runs on a stand-in, not the live paid service. A separate, clearly labeled check covers the real thing.</p>
     </div>
 
     <div class="check-row">
-      <div class="check-row-head"><span class="check-num">02</span><span class="check-title">The URL that resolves to nothing</span></div>
-      <p class="check-detail"><span class="tag">Looks like</span>A trace URL returns success and resolves to nothing. The check confirmed a URL came back, not that it pointed anywhere real.</p>
-      <p class="check-detail verify"><span class="tag">Verify</span>Take the URL your check produced and actually open or fetch it.</p>
-      <p class="check-detail pass"><span class="tag">Real pass</span>The check asserts on the content the URL resolves to, not on the shape of the string.</p>
+      <div class="check-row-head"><span class="check-num">02</span><span class="check-title">The link that goes nowhere</span></div>
+      <p class="check-detail"><span class="tag">Looks like</span>A report said "done" and handed back a link. The link opened to an empty page.</p>
+      <p class="check-detail verify"><span class="tag">Verify</span>Open the actual link. Don't trust that a link exists -- check where it leads.</p>
+      <p class="check-detail pass"><span class="tag">Real pass</span>The check confirms what's on the other side of the link, not just that a link got produced.</p>
     </div>
 
     <div class="check-row">
-      <div class="check-row-head"><span class="check-num">03</span><span class="check-title">The import path only the test runner sees</span></div>
-      <p class="check-detail"><span class="tag">Looks like</span>Demo scripts break with a ModuleNotFoundError while the suite stays green -- the test runner put the repo root on the import path, running the script directly does not.</p>
-      <p class="check-detail verify"><span class="tag">Verify</span>Run every entry point the way a real user would, outside your test runner's environment.</p>
-      <p class="check-detail pass"><span class="tag">Real pass</span>The suite exercises the same import path your real entry points actually use.</p>
+      <div class="check-row-head"><span class="check-num">03</span><span class="check-title">The demo only the demo team could run</span></div>
+      <p class="check-detail"><span class="tag">Looks like</span>Everything passed internally. The moment it ran outside that setup, it broke immediately.</p>
+      <p class="check-detail verify"><span class="tag">Verify</span>Hand it to someone outside the process. Watch them run it cold, in their own setup.</p>
+      <p class="check-detail pass"><span class="tag">Real pass</span>The check runs the way a real person would actually encounter it -- not inside a setup built just to make it pass.</p>
     </div>
 
     <div class="check-row">
-      <div class="check-row-head"><span class="check-num">04</span><span class="check-title">The test that cannot fail</span></div>
-      <p class="check-detail"><span class="tag">Looks like</span>Fixtures written in markdown for an OCR pipeline. Markdown is already machine-readable, so the test cannot fail -- which means it cannot pass either.</p>
-      <p class="check-detail verify"><span class="tag">Verify</span>Ask one plain question: what would actually make this test fail? If you cannot describe it, the test is not testing anything.</p>
-      <p class="check-detail pass"><span class="tag">Real pass</span>Fixtures use the real input format the pipeline was built for -- an actual scanned image, not a transcription of what it says.</p>
+      <div class="check-row-head"><span class="check-num">04</span><span class="check-title">The check that cannot fail</span></div>
+      <p class="check-detail"><span class="tag">Looks like</span>A quality check meant for scanned paperwork, tested with a clean typed version instead of a real scan.</p>
+      <p class="check-detail verify"><span class="tag">Verify</span>Ask one plain question: what would actually make this fail? If you can't answer, it isn't checking anything.</p>
+      <p class="check-detail pass"><span class="tag">Real pass</span>The check runs on the real, messy input the process was built for -- not a clean stand-in.</p>
     </div>
 
     <div class="check-row">
-      <div class="check-row-head"><span class="check-num">05</span><span class="check-title">The single-file grep close</span></div>
-      <p class="check-detail"><span class="tag">Looks like</span>A task closed after grepping one file for the right constant, while a second render path still showed the old value.</p>
-      <p class="check-detail verify"><span class="tag">Verify</span>Search every path that could touch the value, then check what a user actually sees, end to end -- not just what the source file now says.</p>
-      <p class="check-detail pass"><span class="tag">Real pass</span>The value shows correctly wherever it is produced or rendered, not just wherever it happens to be stored.</p>
+      <div class="check-row-head"><span class="check-num">05</span><span class="check-title">The fix that only fixed one copy</span></div>
+      <p class="check-detail"><span class="tag">Looks like</span>A number got corrected in one place and everyone signed off. A second copy, the one customers actually saw, still had the old number.</p>
+      <p class="check-detail verify"><span class="tag">Verify</span>Check where a customer or reader would actually see the result -- not just where it lives in the system.</p>
+      <p class="check-detail pass"><span class="tag">Real pass</span>The number is correct everywhere it shows up, not just in the one place someone happened to check.</p>
     </div>
   </div>
 
   <p class="pull-line">"If a check has never failed, you have not verified that it works."</p>
+  <p class="escape-hatch"><b>Want the mechanics behind any of these?</b> Ask Claude or ChatGPT to
+  walk you through it -- that part takes minutes, not days.</p>
 
   <div class="cta">
     <div class="label">Next step</div>
-    <p class="line">Want the same audit run against your team's actual test suite? <a href="https://linkedin.com/in/estebanvalencia">DM "AUDIT"</a> for the paid AI Workflow Audit.</p>
-    <p class="line">Otherwise, connect for more like this: <a href="https://linkedin.com/in/estebanvalencia">linkedin.com/in/estebanvalencia</a></p>
+    <p class="line primary">If one of these sounds familiar, I've probably already found it in
+    someone else's pipeline too. <a href="https://cal.com/este-val/brief">Book a free 20-minute
+    brief</a> and we'll work out what's actually true before you trust the next green light.</p>
+    <p class="line">Want more of this first: <a href="https://linkedin.com/in/valest">connect on LinkedIn</a>.</p>
   </div>
 
   <div class="doc-footer">
     <div class="who">
       <span class="mark">EV</span>
-      <span class="name">Esteban Valencia</span>
+      <span class="name"></span>
     </div>
-    <span class="handle">linkedin.com/in/estebanvalencia</span>
+    <div class="links">
+      <a class="handle" href="https://linkedin.com/in/valest"></a>
+      <a class="booking" href="https://cal.com/este-val/brief"></a>
+    </div>
   </div>
 
 </section>
