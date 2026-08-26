@@ -142,8 +142,8 @@
     background: var(--card);
     border: var(--rule);
     border-radius: var(--radius-lg);
-    padding: 17px 22px 12px;
-    margin-bottom: var(--sp-md);
+    padding: 13px 22px 8px;
+    margin-bottom: var(--sp-sm);
   }
   .check-card h3 {
     font-family: var(--font-sans);
@@ -162,7 +162,7 @@
   }
 
   .check-row {
-    padding: 13px 0;
+    padding: 9px 0;
     border-bottom: var(--rule);
   }
   .check-row:last-child { border-bottom: none; }
@@ -171,7 +171,7 @@
     display: flex;
     align-items: baseline;
     gap: 9px;
-    margin-bottom: 6px;
+    margin-bottom: 4px;
   }
   .check-num {
     font-family: var(--font-sans);
@@ -190,8 +190,8 @@
   .check-detail {
     font-size: var(--fs-small);
     color: var(--ink-soft);
-    line-height: 1.55;
-    margin-top: 3px;
+    line-height: 1.42;
+    margin-top: 2px;
     padding-left: 29px;
   }
   .check-detail .tag {
@@ -312,37 +312,37 @@
 
     <div class="check-row">
       <div class="check-row-head"><span class="check-num">01</span><span class="check-title">The bill only I could see</span></div>
-      <p class="check-detail"><span class="tag">Looks like</span>A check kept passing every time. It was quietly paying a real vendor for a real call, every single run.</p>
-      <p class="check-detail verify"><span class="tag">Verify</span>Cut that connection off and run the check again. If it still passes, it was never checking your work.</p>
-      <p class="check-detail pass"><span class="tag">Real pass</span>The check runs on a stand-in, not the live paid service. A separate, clearly labeled check covers the real thing.</p>
+      <p class="check-detail"><span class="tag">Looks like</span>A test -- an automatic checkbox your code has to clear before it ships -- kept passing. It was quietly making a real, billed call to a live vendor every single time it ran.</p>
+      <p class="check-detail verify"><span class="tag">Verify</span>Cut the live connection and run the test again. If it still passes, it was never actually testing your work.</p>
+      <p class="check-detail pass"><span class="tag">Real pass</span>The test runs against a stand-in for the vendor, not the live paid service. A separate, clearly labeled test covers the real connection.</p>
     </div>
 
     <div class="check-row">
       <div class="check-row-head"><span class="check-num">02</span><span class="check-title">The link that goes nowhere</span></div>
-      <p class="check-detail"><span class="tag">Looks like</span>A report said "done" and handed back a link. The link opened to an empty page.</p>
-      <p class="check-detail verify"><span class="tag">Verify</span>Open the actual link. Don't trust that a link exists -- check where it leads.</p>
-      <p class="check-detail pass"><span class="tag">Real pass</span>The check confirms what's on the other side of the link, not just that a link got produced.</p>
+      <p class="check-detail"><span class="tag">Looks like</span>A report said "done" and handed back a link. Nobody had opened it -- the page behind it was empty.</p>
+      <p class="check-detail verify"><span class="tag">Verify</span>Open the link yourself. A link existing is not proof of what's on the other end.</p>
+      <p class="check-detail pass"><span class="tag">Real pass</span>The check confirms what's actually at the other end of the link, not just that a link got produced.</p>
     </div>
 
     <div class="check-row">
       <div class="check-row-head"><span class="check-num">03</span><span class="check-title">The demo only the demo team could run</span></div>
-      <p class="check-detail"><span class="tag">Looks like</span>Everything passed internally. The moment it ran outside that setup, it broke immediately.</p>
-      <p class="check-detail verify"><span class="tag">Verify</span>Hand it to someone outside the process. Watch them run it cold, in their own setup.</p>
-      <p class="check-detail pass"><span class="tag">Real pass</span>The check runs the way a real person would actually encounter it -- not inside a setup built just to make it pass.</p>
+      <p class="check-detail"><span class="tag">Looks like</span>Every test passed inside the demo team's own setup. The moment someone ran it the way a real user would, outside that setup, it broke immediately.</p>
+      <p class="check-detail verify"><span class="tag">Verify</span>Hand it to someone outside the process. Watch them run it cold, in their own environment, not yours.</p>
+      <p class="check-detail pass"><span class="tag">Real pass</span>The test runs the way a real person actually encounters the thing, not inside a setup built just to make it pass.</p>
     </div>
 
     <div class="check-row">
-      <div class="check-row-head"><span class="check-num">04</span><span class="check-title">The check that cannot fail</span></div>
-      <p class="check-detail"><span class="tag">Looks like</span>A quality check meant for scanned paperwork, tested with a clean typed version instead of a real scan.</p>
-      <p class="check-detail verify"><span class="tag">Verify</span>Ask one plain question: what would actually make this fail? If you can't answer, it isn't checking anything.</p>
-      <p class="check-detail pass"><span class="tag">Real pass</span>The check runs on the real, messy input the process was built for -- not a clean stand-in.</p>
+      <div class="check-row-head"><span class="check-num">04</span><span class="check-title">The test that cannot fail</span></div>
+      <p class="check-detail"><span class="tag">Looks like</span>The test data for a scanned-document tool was typed text, not an actual scan. Typed text is already machine-readable, so there was no way for that test to ever fail.</p>
+      <p class="check-detail verify"><span class="tag">Verify</span>Ask one plain question: what would actually make this test fail? If you can't answer that, it isn't testing anything.</p>
+      <p class="check-detail pass"><span class="tag">Real pass</span>The test runs on the same messy, real-world input the tool was built for -- an actual scan, not a clean stand-in.</p>
     </div>
 
     <div class="check-row">
       <div class="check-row-head"><span class="check-num">05</span><span class="check-title">The fix that only fixed one copy</span></div>
-      <p class="check-detail"><span class="tag">Looks like</span>A number got corrected in one place and everyone signed off. A second copy, the one customers actually saw, still had the old number.</p>
-      <p class="check-detail verify"><span class="tag">Verify</span>Check where a customer or reader would actually see the result -- not just where it lives in the system.</p>
-      <p class="check-detail pass"><span class="tag">Real pass</span>The number is correct everywhere it shows up, not just in the one place someone happened to check.</p>
+      <p class="check-detail"><span class="tag">Looks like</span>A wrong number got corrected in one file and the ticket got closed. A second place that showed the same number -- the one a customer actually saw -- still had the old value.</p>
+      <p class="check-detail verify"><span class="tag">Verify</span>Check everywhere the value could show up to a real user, end to end -- not just the one file someone happened to edit.</p>
+      <p class="check-detail pass"><span class="tag">Real pass</span>The value is correct wherever it's produced or displayed, not just wherever it happens to be stored.</p>
     </div>
   </div>
 
