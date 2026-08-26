@@ -1,256 +1,311 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <title>Five Checks That Lie</title>
 <style>
+  /*
+    Re-cut onto the DEV-2187 lead-magnet house style (_templates/lead-magnet.html).
+    One-page checklist variant. Renderer: headless Chrome print-to-pdf (Skia/PDF).
+  */
+
   @page {
     size: Letter;
-    margin: 0.85in 0.9in;
-  }
-  * { box-sizing: border-box; }
-  html, body {
-    margin: 0;
-    padding: 0;
-    font-family: "Georgia", "Iowan Old Style", "Times New Roman", serif;
-    color: #1a1a1a;
-    font-size: 11.5pt;
-    line-height: 1.5;
-  }
-  .accent { color: #2f5d5a; } /* muted slate-teal, no purple */
-  .rule {
-    border: none;
-    border-top: 1px solid #c9c2b3;
-    margin: 0.35in 0 0.3in 0;
+    margin: 0.65in 0.8in;
   }
 
-  /* ---------- COVER ---------- */
-  .cover {
-    height: 9.2in;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    page-break-after: always;
-  }
-  .cover .kicker {
-    font-family: "Helvetica Neue", Arial, sans-serif;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    font-size: 9.5pt;
-    color: #6b6456;
-    margin-bottom: 0.32in;
-  }
-  .cover h1 {
-    font-size: 40pt;
-    line-height: 1.12;
-    margin: 0 0 0.22in 0;
-    font-weight: 700;
-    color: #17221f;
-  }
-  .cover .sub {
-    font-size: 13pt;
-    color: #3f3a32;
-    max-width: 5in;
-    line-height: 1.55;
-    margin-bottom: 0.55in;
-  }
-  .cover .provenance {
-    font-family: "Helvetica Neue", Arial, sans-serif;
-    font-size: 9.5pt;
-    color: #6b6456;
-    max-width: 4.6in;
-    line-height: 1.6;
-    margin-bottom: 0.5in;
-  }
-  .cover .byline {
-    font-family: "Helvetica Neue", Arial, sans-serif;
-    font-size: 11pt;
-    color: #17221f;
-  }
-  .cover .byline .name {
-    font-weight: 700;
-    font-size: 12pt;
-    display: block;
-    margin-bottom: 0.05in;
-  }
-  .cover .byline .contact {
-    color: #2f5d5a;
+  :root {
+    --ink:        #241f1a;
+    --ink-soft:   #6b6456;
+    --paper:      #faf7f1;
+    --card:       #ffffff;
+    --line:       #e4dccd;
+
+    --accent:      #2f5d5a;
+    --accent-soft: #e2ebe9;
+
+    --status-done:      #6f8f68;
+    --status-done-soft: #e7ede3;
+    --status-wait:      #b98f4f;
+    --status-wait-soft: #f6ecd8;
+
+    --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    --font-sans:  "Avenir Next", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+    --fs-micro: 7.8px;
+    --fs-small: 9.5px;
+    --fs-body:  11px;
+    --fs-lead:  12px;
+    --fs-h2:    14px;
+    --fs-h1:    22px;
+
+    --sp-xs: 4px;
+    --sp-sm: 9px;
+    --sp-md: 13px;
+    --sp-lg: 20px;
+
+    --radius-sm: 6px;
+    --radius-md: 9px;
+    --radius-lg: 12px;
+    --radius-pill: 20px;
+    --rule: 1px solid var(--line);
   }
 
-  /* ---------- CHECKLIST PAGES ---------- */
-  .item {
-    page-break-after: always;
-  }
-  .item:last-of-type {
-    page-break-after: avoid;
-  }
-  .item .num {
-    font-family: "Helvetica Neue", Arial, sans-serif;
-    font-size: 9.5pt;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: #6b6456;
-    margin-bottom: 0.12in;
-  }
-  .item h2 {
-    font-size: 22pt;
-    line-height: 1.22;
-    margin: 0 0 0.32in 0;
-    color: #17221f;
-  }
-  .block {
-    margin-bottom: 0.28in;
-  }
-  .block .label {
-    font-family: "Helvetica Neue", Arial, sans-serif;
-    font-size: 9pt;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    font-weight: 700;
-    color: #2f5d5a;
-    margin-bottom: 0.08in;
-  }
-  .block p {
-    margin: 0;
-  }
-  .block.check p {
-    font-family: "Menlo", "Courier New", monospace;
-    font-size: 10pt;
-    background: #f4f1ea;
-    border-left: 3px solid #2f5d5a;
-    padding: 0.13in 0.16in;
-    line-height: 1.5;
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  body {
+    font-family: var(--font-serif);
+    color: var(--ink);
+    background: var(--paper);
+    font-size: var(--fs-body);
+    line-height: 1.45;
   }
 
-  /* ---------- CLOSE ---------- */
-  .close {
-    margin-top: 0.55in;
-    padding-top: 0.35in;
-    border-top: 1px solid #c9c2b3;
+  a { color: var(--accent); text-decoration: none; }
+
+  .page { padding: 0; }
+
+  .kicker {
+    font-family: var(--font-sans);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: var(--fs-micro);
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 6px;
   }
-  .close .line {
-    font-size: 16pt;
+
+  h1 {
+    font-size: var(--fs-h1);
+    font-weight: 600;
+    line-height: 1.16;
+    color: var(--ink);
+  }
+  h1 .accent { color: var(--accent); font-style: italic; }
+
+  .intro {
+    margin-top: 6px;
     font-style: italic;
-    color: #17221f;
-    line-height: 1.4;
-    margin-bottom: 0.35in;
+    color: var(--ink-soft);
+    font-size: var(--fs-lead);
+    line-height: 1.45;
+    max-width: 96%;
   }
-  .close .footer {
-    font-family: "Helvetica Neue", Arial, sans-serif;
-    font-size: 9.5pt;
-    color: #6b6456;
+
+  header.doc-header {
+    padding-bottom: var(--sp-sm);
+    border-bottom: var(--rule);
+    margin-bottom: var(--sp-md);
   }
-  .close .footer .name {
+
+  /* ---------- Checklist card ---------- */
+  .checklist {
+    background: var(--card);
+    border: var(--rule);
+    border-radius: var(--radius-lg);
+    padding: 13px 18px 8px;
+    margin-bottom: var(--sp-md);
+  }
+  .checklist h3 {
+    font-family: var(--font-sans);
+    font-size: var(--fs-small);
     font-weight: 700;
-    color: #17221f;
+    text-transform: uppercase;
+    letter-spacing: 0.13em;
+    color: var(--accent);
+    margin-bottom: 2px;
   }
-  .close .footer .contact {
-    color: #2f5d5a;
+  .checklist .sub {
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: var(--fs-small);
+    margin-bottom: 8px;
   }
+
+  .check-row {
+    padding: 9px 0;
+    border-bottom: var(--rule);
+  }
+  .check-row:last-child { border-bottom: none; }
+
+  .check-row-head {
+    display: flex;
+    align-items: baseline;
+    gap: 9px;
+    margin-bottom: 5px;
+  }
+  .check-num {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 10px;
+    color: var(--ink-soft);
+    flex: 0 0 auto;
+  }
+  .check-title {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: var(--fs-h2);
+    color: var(--ink);
+  }
+
+  .check-detail {
+    font-size: var(--fs-small);
+    color: var(--ink-soft);
+    line-height: 1.5;
+    margin-top: 3px;
+    padding-left: 29px;
+  }
+  .check-detail .tag {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+    display: inline-block;
+    width: 68px;
+  }
+  .check-detail.verify .tag { color: var(--status-wait); }
+  .check-detail.pass .tag { color: var(--status-done); }
+
+  .pull-line {
+    font-style: italic;
+    font-size: 13px;
+    color: var(--ink);
+    margin: var(--sp-sm) 0 var(--sp-md);
+    padding: 10px 14px;
+    border-left: 3px solid var(--accent);
+    background: var(--accent-soft);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  }
+
+  /* ---------- CTA block ---------- */
+  .cta {
+    margin-top: var(--sp-sm);
+    background: var(--accent-soft);
+    border: 1px solid var(--accent);
+    border-radius: var(--radius-lg);
+    padding: 13px 18px 14px;
+  }
+  .cta .label {
+    font-family: var(--font-sans);
+    font-size: var(--fs-small);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+    margin-bottom: 5px;
+  }
+  .cta .line {
+    font-size: var(--fs-body);
+    line-height: 1.45;
+    margin-bottom: 3px;
+  }
+  .cta .line:last-child { margin-bottom: 0; }
+  .cta a { font-weight: 700; }
+
+  /* ---------- Footer ---------- */
+  .doc-footer {
+    margin-top: var(--sp-md);
+    padding-top: 7px;
+    border-top: var(--rule);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--font-sans);
+    font-size: var(--fs-micro);
+    color: var(--ink-soft);
+  }
+  .doc-footer .mark {
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    border: 1.3px solid var(--accent);
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 7.5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 6px;
+  }
+  .doc-footer .who { display: flex; align-items: center; }
+  .doc-footer .name { font-weight: 700; color: var(--ink); }
+  .doc-footer .handle { color: var(--accent); }
 </style>
 </head>
 <body>
 
-  <section class="cover">
+<section class="page">
+
+  <header class="doc-header">
     <div class="kicker">A working checklist</div>
-    <h1>Five Checks<br>That Lie</h1>
-    <p class="sub">Five passing checks that proved nothing, found in one person's own pipeline in 48 hours. What each one looks like, how to check for it in yours, and what a real pass looks like instead of a green one.</p>
-    <p class="provenance">Every one of these produced a real green signal. Each measured something adjacent to what was actually being cared about. A passing test proves the code behaves the way the test invokes it, not that the program runs.</p>
-    <div class="byline">
+    <h1>Five Checks <span class="accent">That Lie</span></h1>
+    <p class="intro">Five passing checks that proved nothing, found in one person's own pipeline in
+    48 hours. Every one of them produced a real green signal. Each measured something adjacent to
+    what was actually being cared about -- a passing test proves the code behaves the way the test
+    invokes it, not that the program runs.</p>
+  </header>
+
+  <div class="checklist">
+    <h3>Run these against your own suite</h3>
+    <div class="sub">In order. Each one takes minutes to check, and tells you honestly whether a
+    green result means what you think it means.</div>
+
+    <div class="check-row">
+      <div class="check-row-head"><span class="check-num">01</span><span class="check-title">The billed-API mirage</span></div>
+      <p class="check-detail"><span class="tag">Looks like</span>A suite that passes because it is quietly making real, billed calls to a live API -- it only fails in CI, where there is no key.</p>
+      <p class="check-detail verify"><span class="tag">Verify</span>Run the suite with the API key unset. If it still passes, it was never testing your logic.</p>
+      <p class="check-detail pass"><span class="tag">Real pass</span>The suite runs against a mock or fixture, no key and no network required. A separate, clearly labeled integration test covers the live call.</p>
+    </div>
+
+    <div class="check-row">
+      <div class="check-row-head"><span class="check-num">02</span><span class="check-title">The URL that resolves to nothing</span></div>
+      <p class="check-detail"><span class="tag">Looks like</span>A trace URL returns success and resolves to nothing. The check confirmed a URL came back, not that it pointed anywhere real.</p>
+      <p class="check-detail verify"><span class="tag">Verify</span>Take the URL your check produced and actually open or fetch it.</p>
+      <p class="check-detail pass"><span class="tag">Real pass</span>The check asserts on the content the URL resolves to, not on the shape of the string.</p>
+    </div>
+
+    <div class="check-row">
+      <div class="check-row-head"><span class="check-num">03</span><span class="check-title">The import path only the test runner sees</span></div>
+      <p class="check-detail"><span class="tag">Looks like</span>Demo scripts break with a ModuleNotFoundError while the suite stays green -- the test runner put the repo root on the import path, running the script directly does not.</p>
+      <p class="check-detail verify"><span class="tag">Verify</span>Run every entry point the way a real user would, outside your test runner's environment.</p>
+      <p class="check-detail pass"><span class="tag">Real pass</span>The suite exercises the same import path your real entry points actually use.</p>
+    </div>
+
+    <div class="check-row">
+      <div class="check-row-head"><span class="check-num">04</span><span class="check-title">The test that cannot fail</span></div>
+      <p class="check-detail"><span class="tag">Looks like</span>Fixtures written in markdown for an OCR pipeline. Markdown is already machine-readable, so the test cannot fail -- which means it cannot pass either.</p>
+      <p class="check-detail verify"><span class="tag">Verify</span>Ask one plain question: what would actually make this test fail? If you cannot describe it, the test is not testing anything.</p>
+      <p class="check-detail pass"><span class="tag">Real pass</span>Fixtures use the real input format the pipeline was built for -- an actual scanned image, not a transcription of what it says.</p>
+    </div>
+
+    <div class="check-row">
+      <div class="check-row-head"><span class="check-num">05</span><span class="check-title">The single-file grep close</span></div>
+      <p class="check-detail"><span class="tag">Looks like</span>A task closed after grepping one file for the right constant, while a second render path still showed the old value.</p>
+      <p class="check-detail verify"><span class="tag">Verify</span>Search every path that could touch the value, then check what a user actually sees, end to end -- not just what the source file now says.</p>
+      <p class="check-detail pass"><span class="tag">Real pass</span>The value shows correctly wherever it is produced or rendered, not just wherever it happens to be stored.</p>
+    </div>
+  </div>
+
+  <p class="pull-line">"If a check has never failed, you have not verified that it works."</p>
+
+  <div class="cta">
+    <div class="label">Next step</div>
+    <p class="line">Found one of these in your own pipeline? <a href="https://linkedin.com/in/estebanvalencia">DM "READY" on LinkedIn</a> for a free AI readiness working session, no fixed price.</p>
+    <p class="line">Want the same audit run against your team's actual test suite? <a href="https://linkedin.com/in/estebanvalencia">DM "AUDIT"</a> for the paid AI Workflow Audit.</p>
+    <p class="line">Otherwise, connect for more like this: <a href="https://linkedin.com/in/estebanvalencia">linkedin.com/in/estebanvalencia</a></p>
+  </div>
+
+  <div class="doc-footer">
+    <div class="who">
+      <span class="mark">EV</span>
       <span class="name">Esteban Valencia</span>
-      <span class="contact">linkedin.com/in/estebanvalencia</span>
     </div>
-  </section>
+    <span class="handle">linkedin.com/in/estebanvalencia</span>
+  </div>
 
-  <section class="item">
-    <div class="num">01 / 05</div>
-    <h2>The billed&#8209;API mirage</h2>
-    <div class="block">
-      <div class="label">What it looks like</div>
-      <p>A test suite passes because it is making real, billed live API calls. It only fails in CI, where there is no key. Locally, everything looks green because the test is quietly talking to a live service instead of testing your code's logic.</p>
-    </div>
-    <div class="block check">
-      <div class="label">How to check for it</div>
-      <p>Run the suite with the API key unset, or with network access revoked. If it still passes, it was never testing what you think. If it fails only in that condition, you have found the mirage.</p>
-    </div>
-    <div class="block">
-      <div class="label">What a real pass looks like</div>
-      <p>The suite passes against a mock or fixture standing in for the API, with no key and no network required. A separate, clearly labeled integration test covers the live call, and it fails loudly, not silently, when the key is missing.</p>
-    </div>
-  </section>
-
-  <section class="item">
-    <div class="num">02 / 05</div>
-    <h2>The URL that resolves to nothing</h2>
-    <div class="block">
-      <div class="label">What it looks like</div>
-      <p>A trace URL returns success and resolves to nothing. The check confirmed a URL came back, not that it pointed anywhere real.</p>
-    </div>
-    <div class="block check">
-      <div class="label">How to check for it</div>
-      <p>Take the URL your check produced and actually open or fetch it. Confirm it resolves to real content, not a blank page, a 404, or an empty payload dressed up as a success response.</p>
-    </div>
-    <div class="block">
-      <div class="label">What a real pass looks like</div>
-      <p>The check asserts on the content the URL resolves to, not on the shape of the string. A URL that comes back but points nowhere fails the check, the same way a URL that never came back would.</p>
-    </div>
-  </section>
-
-  <section class="item">
-    <div class="num">03 / 05</div>
-    <h2>The import path only the test runner sees</h2>
-    <div class="block">
-      <div class="label">What it looks like</div>
-      <p>Eight demo scripts broke with a ModuleNotFoundError while the suite stayed green. The test runner put the repo root on the import path; running the script directly did not. The suite was exercising an import path the real entry points never use.</p>
-    </div>
-    <div class="block check">
-      <div class="label">How to check for it</div>
-      <p>Run every entry point exactly the way a real user or a real deployment would run it, outside your test runner's environment, not through it. If it breaks there and passes in the suite, the suite is testing the runner, not the program.</p>
-    </div>
-    <div class="block">
-      <div class="label">What a real pass looks like</div>
-      <p>The suite exercises the same import path your real entry points actually use. A script that works when the test framework runs it and fails when a person runs it directly has not passed anything that matters.</p>
-    </div>
-  </section>
-
-  <section class="item">
-    <div class="num">04 / 05</div>
-    <h2>The test that cannot fail</h2>
-    <div class="block">
-      <div class="label">What it looks like</div>
-      <p>Fixtures written in markdown for an OCR pipeline. Markdown is already machine-readable text, so the test cannot fail, which means it cannot pass either. It never asked the pipeline to do the job it exists to do.</p>
-    </div>
-    <div class="block check">
-      <div class="label">How to check for it</div>
-      <p>Ask one plain question of every test: what would actually make this fail? If you cannot describe a realistic failure, the test is not testing anything, it is just running.</p>
-    </div>
-    <div class="block">
-      <div class="label">What a real pass looks like</div>
-      <p>Fixtures use the real input format the pipeline was built for, an actual scanned image for an OCR pipeline, not a transcription of what the image says. The test can genuinely fail, which is what makes a pass mean something.</p>
-    </div>
-  </section>
-
-  <section class="item">
-    <div class="num">05 / 05</div>
-    <h2>The single-file grep close</h2>
-    <div class="block">
-      <div class="label">What it looks like</div>
-      <p>A task closed after grepping one file for the right constant, while a second render path still showed the old value. The fix existed. It just was not the only place the old value lived.</p>
-    </div>
-    <div class="block check">
-      <div class="label">How to check for it</div>
-      <p>Before closing, search every path that could touch the value, not only the one you edited, and check what a user or downstream system actually sees, end to end, not just what the source file now says.</p>
-    </div>
-    <div class="block">
-      <div class="label">What a real pass looks like</div>
-      <p>The value shows correctly wherever it is produced or rendered, in every path, not just wherever it happens to be stored.</p>
-    </div>
-
-    <div class="close">
-      <p class="line">&#8220;If a check has never failed, you have not verified that it works.&#8221;</p>
-      <p class="footer"><span class="name">Esteban Valencia</span> &nbsp;&middot;&nbsp; <span class="contact">linkedin.com/in/estebanvalencia</span></p>
-    </div>
-  </section>
+</section>
 
 </body>
 </html>
