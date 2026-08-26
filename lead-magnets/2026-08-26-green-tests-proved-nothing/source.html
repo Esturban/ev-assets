@@ -7,7 +7,7 @@
   /*
     Re-cut onto the DEV-2187 lead-magnet house style, round 3.
     One-page checklist variant. Renderer: headless Chrome print-to-pdf (Skia/PDF).
-    Register pass: rewritten for a non-technical professional audience -- see
+    Register pass: rewritten for a non-technical professional audience. See
     _templates/lead-magnet-style-note.md for the system this inherits.
   */
 
@@ -298,11 +298,11 @@
   <header class="doc-header">
     <div class="kicker-row">
       <div class="kicker">A working checklist</div>
-      <div class="dateline">Field note -- 26 Aug 2026</div>
+      <div class="dateline">Aug 2026</div>
     </div>
     <h1>Five Checks <span class="accent">That Lie</span></h1>
     <p class="intro">Five green checkmarks. None of them proved what I thought they proved. I
-    found all five in my own work, in one week -- not in someone else's.</p>
+    found all five in my own work, in one week. Not in someone else's.</p>
   </header>
 
   <div class="check-card">
@@ -312,14 +312,14 @@
 
     <div class="check-row">
       <div class="check-row-head"><span class="check-num">01</span><span class="check-title">The bill only I could see</span></div>
-      <p class="check-detail"><span class="tag">Looks like</span>A test -- an automatic checkbox your code has to clear before it ships -- kept passing. It was quietly making a real, billed call to a live vendor every single time it ran.</p>
+      <p class="check-detail"><span class="tag">Looks like</span>A test is an automatic checkbox your code has to clear before it ships. This one kept passing. It was quietly making a real, billed call to a live vendor every single time it ran.</p>
       <p class="check-detail verify"><span class="tag">Verify</span>Cut the live connection and run the test again. If it still passes, it was never actually testing your work.</p>
       <p class="check-detail pass"><span class="tag">Real pass</span>The test runs against a stand-in for the vendor, not the live paid service. A separate, clearly labeled test covers the real connection.</p>
     </div>
 
     <div class="check-row">
       <div class="check-row-head"><span class="check-num">02</span><span class="check-title">The link that goes nowhere</span></div>
-      <p class="check-detail"><span class="tag">Looks like</span>A report said "done" and handed back a link. Nobody had opened it -- the page behind it was empty.</p>
+      <p class="check-detail"><span class="tag">Looks like</span>A report said "done" and handed back a link. Nobody had opened it. The page behind it was empty.</p>
       <p class="check-detail verify"><span class="tag">Verify</span>Open the link yourself. A link existing is not proof of what's on the other end.</p>
       <p class="check-detail pass"><span class="tag">Real pass</span>The check confirms what's actually at the other end of the link, not just that a link got produced.</p>
     </div>
@@ -335,20 +335,20 @@
       <div class="check-row-head"><span class="check-num">04</span><span class="check-title">The test that cannot fail</span></div>
       <p class="check-detail"><span class="tag">Looks like</span>The test data for a scanned-document tool was typed text, not an actual scan. Typed text is already machine-readable, so there was no way for that test to ever fail.</p>
       <p class="check-detail verify"><span class="tag">Verify</span>Ask one plain question: what would actually make this test fail? If you can't answer that, it isn't testing anything.</p>
-      <p class="check-detail pass"><span class="tag">Real pass</span>The test runs on the same messy, real-world input the tool was built for -- an actual scan, not a clean stand-in.</p>
+      <p class="check-detail pass"><span class="tag">Real pass</span>The test runs on the same messy, real-world input the tool was built for: an actual scan, not a clean stand-in.</p>
     </div>
 
     <div class="check-row">
       <div class="check-row-head"><span class="check-num">05</span><span class="check-title">The fix that only fixed one copy</span></div>
-      <p class="check-detail"><span class="tag">Looks like</span>A wrong number got corrected in one file and the ticket got closed. A second place that showed the same number -- the one a customer actually saw -- still had the old value.</p>
-      <p class="check-detail verify"><span class="tag">Verify</span>Check everywhere the value could show up to a real user, end to end -- not just the one file someone happened to edit.</p>
+      <p class="check-detail"><span class="tag">Looks like</span>A wrong number got corrected in one file and the ticket got closed. A second place that showed the same number, the one a customer actually saw, still had the old value.</p>
+      <p class="check-detail verify"><span class="tag">Verify</span>Check everywhere the value could show up to a real user, end to end, not just the one file someone happened to edit.</p>
       <p class="check-detail pass"><span class="tag">Real pass</span>The value is correct wherever it's produced or displayed, not just wherever it happens to be stored.</p>
     </div>
   </div>
 
   <p class="pull-line">"If a check has never failed, you have not verified that it works."</p>
   <p class="escape-hatch"><b>Want the mechanics behind any of these?</b> Ask Claude or ChatGPT to
-  walk you through it -- that part takes minutes, not days.</p>
+  walk you through it. That part takes minutes, not days.</p>
 
   <div class="cta">
     <div class="label">Next step</div>
