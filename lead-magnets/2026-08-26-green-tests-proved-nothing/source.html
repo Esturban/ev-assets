@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Five Checks That Lie</title>
+<style>
+  @page {
+    size: Letter;
+    margin: 0.85in 0.9in;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    font-family: "Georgia", "Iowan Old Style", "Times New Roman", serif;
+    color: #1a1a1a;
+    font-size: 11.5pt;
+    line-height: 1.5;
+  }
+  .accent { color: #2f5d5a; } /* muted slate-teal, no purple */
+  .rule {
+    border: none;
+    border-top: 1px solid #c9c2b3;
+    margin: 0.35in 0 0.3in 0;
+  }
+
+  /* ---------- COVER ---------- */
+  .cover {
+    height: 9.2in;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    page-break-after: always;
+  }
+  .cover .kicker {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-size: 9.5pt;
+    color: #6b6456;
+    margin-bottom: 0.32in;
+  }
+  .cover h1 {
+    font-size: 40pt;
+    line-height: 1.12;
+    margin: 0 0 0.22in 0;
+    font-weight: 700;
+    color: #17221f;
+  }
+  .cover .sub {
+    font-size: 13pt;
+    color: #3f3a32;
+    max-width: 5in;
+    line-height: 1.55;
+    margin-bottom: 0.55in;
+  }
+  .cover .provenance {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 9.5pt;
+    color: #6b6456;
+    max-width: 4.6in;
+    line-height: 1.6;
+    margin-bottom: 0.5in;
+  }
+  .cover .byline {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 11pt;
+    color: #17221f;
+  }
+  .cover .byline .name {
+    font-weight: 700;
+    font-size: 12pt;
+    display: block;
+    margin-bottom: 0.05in;
+  }
+  .cover .byline .contact {
+    color: #2f5d5a;
+  }
+
+  /* ---------- CHECKLIST PAGES ---------- */
+  .item {
+    page-break-after: always;
+  }
+  .item:last-of-type {
+    page-break-after: avoid;
+  }
+  .item .num {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 9.5pt;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #6b6456;
+    margin-bottom: 0.12in;
+  }
+  .item h2 {
+    font-size: 22pt;
+    line-height: 1.22;
+    margin: 0 0 0.32in 0;
+    color: #17221f;
+  }
+  .block {
+    margin-bottom: 0.28in;
+  }
+  .block .label {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 9pt;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: #2f5d5a;
+    margin-bottom: 0.08in;
+  }
+  .block p {
+    margin: 0;
+  }
+  .block.check p {
+    font-family: "Menlo", "Courier New", monospace;
+    font-size: 10pt;
+    background: #f4f1ea;
+    border-left: 3px solid #2f5d5a;
+    padding: 0.13in 0.16in;
+    line-height: 1.5;
+  }
+
+  /* ---------- CLOSE ---------- */
+  .close {
+    margin-top: 0.55in;
+    padding-top: 0.35in;
+    border-top: 1px solid #c9c2b3;
+  }
+  .close .line {
+    font-size: 16pt;
+    font-style: italic;
+    color: #17221f;
+    line-height: 1.4;
+    margin-bottom: 0.35in;
+  }
+  .close .footer {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 9.5pt;
+    color: #6b6456;
+  }
+  .close .footer .name {
+    font-weight: 700;
+    color: #17221f;
+  }
+  .close .footer .contact {
+    color: #2f5d5a;
+  }
+</style>
+</head>
+<body>
+
+  <section class="cover">
+    <div class="kicker">A working checklist</div>
+    <h1>Five Checks<br>That Lie</h1>
+    <p class="sub">Five passing checks that proved nothing, found in one person's own pipeline in 48 hours. What each one looks like, how to check for it in yours, and what a real pass looks like instead of a green one.</p>
+    <p class="provenance">Every one of these produced a real green signal. Each measured something adjacent to what was actually being cared about. A passing test proves the code behaves the way the test invokes it, not that the program runs.</p>
+    <div class="byline">
+      <span class="name">Esteban Valencia</span>
+      <span class="contact">linkedin.com/in/estebanvalencia</span>
+    </div>
+  </section>
+
+  <section class="item">
+    <div class="num">01 / 05</div>
+    <h2>The billed&#8209;API mirage</h2>
+    <div class="block">
+      <div class="label">What it looks like</div>
+      <p>A test suite passes because it is making real, billed live API calls. It only fails in CI, where there is no key. Locally, everything looks green because the test is quietly talking to a live service instead of testing your code's logic.</p>
+    </div>
+    <div class="block check">
+      <div class="label">How to check for it</div>
+      <p>Run the suite with the API key unset, or with network access revoked. If it still passes, it was never testing what you think. If it fails only in that condition, you have found the mirage.</p>
+    </div>
+    <div class="block">
+      <div class="label">What a real pass looks like</div>
+      <p>The suite passes against a mock or fixture standing in for the API, with no key and no network required. A separate, clearly labeled integration test covers the live call, and it fails loudly, not silently, when the key is missing.</p>
+    </div>
+  </section>
+
+  <section class="item">
+    <div class="num">02 / 05</div>
+    <h2>The URL that resolves to nothing</h2>
+    <div class="block">
+      <div class="label">What it looks like</div>
+      <p>A trace URL returns success and resolves to nothing. The check confirmed a URL came back, not that it pointed anywhere real.</p>
+    </div>
+    <div class="block check">
+      <div class="label">How to check for it</div>
+      <p>Take the URL your check produced and actually open or fetch it. Confirm it resolves to real content, not a blank page, a 404, or an empty payload dressed up as a success response.</p>
+    </div>
+    <div class="block">
+      <div class="label">What a real pass looks like</div>
+      <p>The check asserts on the content the URL resolves to, not on the shape of the string. A URL that comes back but points nowhere fails the check, the same way a URL that never came back would.</p>
+    </div>
+  </section>
+
+  <section class="item">
+    <div class="num">03 / 05</div>
+    <h2>The import path only the test runner sees</h2>
+    <div class="block">
+      <div class="label">What it looks like</div>
+      <p>Eight demo scripts broke with a ModuleNotFoundError while the suite stayed green. The test runner put the repo root on the import path; running the script directly did not. The suite was exercising an import path the real entry points never use.</p>
+    </div>
+    <div class="block check">
+      <div class="label">How to check for it</div>
+      <p>Run every entry point exactly the way a real user or a real deployment would run it, outside your test runner's environment, not through it. If it breaks there and passes in the suite, the suite is testing the runner, not the program.</p>
+    </div>
+    <div class="block">
+      <div class="label">What a real pass looks like</div>
+      <p>The suite exercises the same import path your real entry points actually use. A script that works when the test framework runs it and fails when a person runs it directly has not passed anything that matters.</p>
+    </div>
+  </section>
+
+  <section class="item">
+    <div class="num">04 / 05</div>
+    <h2>The test that cannot fail</h2>
+    <div class="block">
+      <div class="label">What it looks like</div>
+      <p>Fixtures written in markdown for an OCR pipeline. Markdown is already machine-readable text, so the test cannot fail, which means it cannot pass either. It never asked the pipeline to do the job it exists to do.</p>
+    </div>
+    <div class="block check">
+      <div class="label">How to check for it</div>
+      <p>Ask one plain question of every test: what would actually make this fail? If you cannot describe a realistic failure, the test is not testing anything, it is just running.</p>
+    </div>
+    <div class="block">
+      <div class="label">What a real pass looks like</div>
+      <p>Fixtures use the real input format the pipeline was built for, an actual scanned image for an OCR pipeline, not a transcription of what the image says. The test can genuinely fail, which is what makes a pass mean something.</p>
+    </div>
+  </section>
+
+  <section class="item">
+    <div class="num">05 / 05</div>
+    <h2>The single-file grep close</h2>
+    <div class="block">
+      <div class="label">What it looks like</div>
+      <p>A task closed after grepping one file for the right constant, while a second render path still showed the old value. The fix existed. It just was not the only place the old value lived.</p>
+    </div>
+    <div class="block check">
+      <div class="label">How to check for it</div>
+      <p>Before closing, search every path that could touch the value, not only the one you edited, and check what a user or downstream system actually sees, end to end, not just what the source file now says.</p>
+    </div>
+    <div class="block">
+      <div class="label">What a real pass looks like</div>
+      <p>The value shows correctly wherever it is produced or rendered, in every path, not just wherever it happens to be stored.</p>
+    </div>
+
+    <div class="close">
+      <p class="line">&#8220;If a check has never failed, you have not verified that it works.&#8221;</p>
+      <p class="footer"><span class="name">Esteban Valencia</span> &nbsp;&middot;&nbsp; <span class="contact">linkedin.com/in/estebanvalencia</span></p>
+    </div>
+  </section>
+
+</body>
+</html>
