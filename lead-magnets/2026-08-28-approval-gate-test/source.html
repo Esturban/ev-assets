@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The Approval Gate Test</title>
+<style>
+  /*
+    LEAD MAGNET. Built on the house style template (_templates/lead-magnet.html, DEV-2187).
+    Multi-page variant: cover + content + close, 3 pages, the hard ceiling. Renderer: headless
+    Chrome print-to-pdf (Skia/PDF). Topic: a two-minute test for whether an "approval gate" in an
+    agent workflow is a real deterministic check or just a label on a field nothing reads.
+    Source content: wiki/content-ideas/2026-08/approval-gate-lead-magnet/lead-magnet.md
+    (CMO-2316).
+  */
+
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  :root {
+    /* ---- House palette ---- */
+    --ink:        #241f1a;
+    --ink-soft:   #6b6456;
+    --paper:      #faf7f1;
+    --card:       #ffffff;
+    --line:       #e4dccd;
+
+    --accent:      #2f5d5a;
+    --accent-soft: #e2ebe9;
+
+    --status-done:      #6f8f68;
+    --status-done-soft: #e7ede3;
+    --status-wait:      #b98f4f;
+    --status-wait-soft: #f6ecd8;
+    --status-action:      #ab5d44;
+    --status-action-soft: #f3e1d8;
+
+    /* ---- Identity tokens ---- */
+    --identity-byline:            "Esteban V.";
+    --identity-linkedin-url:      "https://linkedin.com/in/valest";
+    --identity-linkedin-display:  "linkedin.com/in/valest";
+    --identity-booking-url:       "https://cal.com/este-val/brief";
+    --identity-booking-display:   "cal.com/este-val/brief";
+
+    /* ---- Type ---- */
+    --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    --font-sans:  "Avenir Next", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+    --fs-micro: 7.5px;
+    --fs-small: 9px;
+    --fs-body:  10.5px;
+    --fs-lead:  11.5px;
+    --fs-h2:    13px;
+    --fs-h1:    22px;
+    --fs-cover: 34px;
+
+    /* ---- Spacing ---- */
+    --sp-xs: 4px;
+    --sp-sm: 8px;
+    --sp-md: 14px;
+    --sp-lg: 22px;
+    --sp-xl: 36px;
+
+    /* ---- Geometry ---- */
+    --radius-sm: 6px;
+    --radius-md: 9px;
+    --radius-lg: 12px;
+    --radius-pill: 20px;
+    --rule: 1px solid var(--line);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html {
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    background: var(--paper);
+  }
+
+  body {
+    font-family: var(--font-serif);
+    color: var(--ink);
+    background: var(--paper);
+    font-size: var(--fs-body);
+    line-height: 1.5;
+  }
+
+  .sans { font-family: var(--font-sans); }
+
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .page {
+    page-break-after: always;
+    min-height: 11.69in;
+    padding: 0.7in 0.8in;
+    background: var(--paper);
+  }
+  .page:last-of-type { page-break-after: avoid; }
+
+  .kicker-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--sp-sm);
+    margin-bottom: var(--sp-sm);
+  }
+  .kicker {
+    font-family: var(--font-sans);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: var(--fs-micro);
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .dateline {
+    font-family: var(--font-sans);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: var(--fs-micro);
+    color: var(--ink-soft);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  h1 {
+    font-size: var(--fs-h1);
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--ink);
+  }
+  h1.cover-title { font-size: var(--fs-cover); line-height: 1.14; }
+  h1 .accent { color: var(--accent); font-style: italic; }
+
+  .intro {
+    margin-top: var(--sp-sm);
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: var(--fs-lead);
+    line-height: 1.55;
+    max-width: 92%;
+  }
+
+  .section-title {
+    font-family: var(--font-sans);
+    font-size: var(--fs-small);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    margin: var(--sp-xl) 0 var(--sp-md);
+    display: flex;
+    align-items: baseline;
+    gap: var(--sp-sm);
+    color: var(--accent);
+  }
+  .section-title .dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    display: inline-block; flex: 0 0 auto;
+    background: var(--accent);
+  }
+  .section-title .sub {
+    font-weight: 500;
+    text-transform: none;
+    letter-spacing: 0;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: var(--fs-small);
+    color: var(--ink-soft);
+  }
+
+  p.body-text {
+    font-size: var(--fs-lead);
+    line-height: 1.65;
+    color: var(--ink);
+    margin-bottom: var(--sp-md);
+  }
+
+  .twoup { display: flex; gap: 14px; margin: var(--sp-md) 0 var(--sp-lg); }
+  .twoup .card2 {
+    flex: 1 1 0;
+    background: var(--card);
+    border: var(--rule);
+    border-radius: var(--radius-md);
+    padding: 12px 14px 13px;
+  }
+  .card2 .h {
+    font-family: var(--font-sans);
+    font-size: var(--fs-h2);
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: var(--sp-xs);
+  }
+  .card2 p { font-size: var(--fs-small); line-height: 1.55; color: var(--ink-soft); }
+  .card2 p b { color: var(--ink); }
+
+  ol.test-steps {
+    margin: var(--sp-md) 0 var(--sp-lg) 20px;
+    padding: 0;
+  }
+  ol.test-steps li {
+    font-size: var(--fs-body);
+    line-height: 1.6;
+    color: var(--ink);
+    margin-bottom: 5px;
+    padding-left: 4px;
+  }
+  ol.test-steps li b { color: var(--accent); }
+
+  .callout {
+    border-radius: var(--radius-md);
+    padding: 13px 15px;
+    margin: var(--sp-md) 0;
+    font-size: var(--fs-body);
+    line-height: 1.55;
+  }
+  .callout.good {
+    background: var(--status-done-soft);
+    border-left: 4px solid var(--status-done);
+  }
+  .callout.good b { color: #4c6547; }
+  .callout.warn {
+    background: var(--status-wait-soft);
+    border-left: 4px solid var(--status-wait);
+  }
+  .callout.warn b { color: #8a5a00; }
+
+  .cta {
+    margin-top: var(--sp-xl);
+    background: var(--accent-soft);
+    border: 1px solid var(--accent);
+    border-radius: var(--radius-lg);
+    padding: 15px 18px 17px;
+  }
+  .cta .label {
+    font-family: var(--font-sans);
+    font-size: var(--fs-small);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  .cta .line {
+    font-size: var(--fs-body);
+    line-height: 1.5;
+    margin-bottom: 4px;
+  }
+  .cta .line.primary { font-weight: 500; }
+  .cta .line:last-child { margin-bottom: 0; }
+  .cta a { font-weight: 700; }
+
+  .doc-footer {
+    margin-top: var(--sp-lg);
+    padding-top: var(--sp-sm);
+    border-top: var(--rule);
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    font-family: var(--font-sans);
+    font-size: var(--fs-micro);
+    color: var(--ink-soft);
+  }
+  .doc-footer .mark {
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    border: 1.3px solid var(--accent);
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 7.5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 6px;
+  }
+  .doc-footer .who { display: flex; align-items: center; }
+  .doc-footer .name { font-weight: 700; color: var(--ink); }
+  .doc-footer .name::before { content: var(--identity-byline); }
+  .doc-footer .links {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+  }
+  .doc-footer .handle { color: var(--accent); }
+  .doc-footer .handle::before { content: var(--identity-linkedin-display); }
+  .doc-footer .booking { color: var(--accent); }
+  .doc-footer .booking::before { content: var(--identity-booking-display); }
+
+  /* Cover page (multi-page variant only). Named .cover deliberately distinct from h1's
+     .cover-title, see the house style note's naming trap. Never reuse .cover for anything
+     other than this page-level wrapper. */
+  .cover {
+    height: 9.2in;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .cover .provenance {
+    font-family: var(--font-sans);
+    font-size: var(--fs-small);
+    color: var(--ink-soft);
+    max-width: 4.8in;
+    line-height: 1.6;
+    margin: var(--sp-md) 0 var(--sp-lg);
+  }
+</style>
+</head>
+<body>
+
+<section class="page cover">
+  <div class="kicker-row">
+    <div class="kicker">The Approval Gate Test</div>
+    <div class="dateline">Aug 2026</div>
+  </div>
+  <h1 class="cover-title">Your approval step might just be a <span
+  class="accent">label</span></h1>
+  <p class="intro">A two-minute test to find out whether anything in your agent workflow can
+  actually say no. Most cannot.</p>
+  <p class="provenance">Found by testing a set of published agent-pattern examples that call a
+  step an "approval gate," then checking whether anything in the code actually blocks the action
+  if that label says no. Most of the time, nothing does.</p>
+  <div class="doc-footer">
+    <div class="who">
+      <span class="mark">EV</span>
+      <span class="name"></span>
+    </div>
+    <div class="links">
+      <a class="handle" href="https://linkedin.com/in/valest"></a>
+      <a class="booking" href="https://cal.com/este-val/brief"></a>
+    </div>
+  </div>
+</section>
+
+<section class="page">
+
+  <div class="section-title">
+    <span class="dot"></span> The trigger
+  </div>
+  <p class="body-text">You added a step that says "route to approval" or "needs human review"
+  somewhere in an agent or automation you built. You assumed that step was a safety net. It
+  might be. It might also be a field in a JSON output that nothing downstream ever reads.</p>
+
+  <div class="section-title">
+    <span class="dot"></span> The insight
+  </div>
+  <p class="body-text">Across a set of published agent-pattern examples, one pattern kept
+  showing up under the name "approval gate": a router labels an input with an approval tier, and
+  the demo stops there. Nothing in the code actually blocks the action if that label says "needs
+  approval." The label is the whole feature. A real gate is different: it is a check that runs
+  outside the model's own judgment, and the action cannot proceed until that check passes.</p>
+
+  <div class="twoup">
+    <div class="card2">
+      <div class="h">A label</div>
+      <p>A router marks an input with an approval tier. The demo stops there. <b>Nothing in the
+      code blocks the action</b> if that label says "needs approval."</p>
+    </div>
+    <div class="card2">
+      <div class="h">A gate</div>
+      <p>A check runs <b>outside the model's own judgment.</b> The action cannot proceed until
+      that check passes, no matter how confident the model's own output looked.</p>
+    </div>
+  </div>
+
+  <div class="section-title">
+    <span class="dot"></span> The test <span class="sub">run it today, on your own workflow</span>
+  </div>
+  <ol class="test-steps">
+    <li><b>Find</b> the approval or review step in your own workflow.</li>
+    <li><b>Ask</b> one question: if that step said "no," what line of code, or what script,
+    would actually stop the action from happening?</li>
+    <li><b>Point</b> to it. Not describe it. Point to it.</li>
+    <li>If the honest answer is "the model decided" or "there isn't one," <b>you have a label,
+    not a gate.</b></li>
+  </ol>
+
+  <div class="callout warn">
+    <b>Most workflows fail step 3.</b> That is not a verdict on the workflow, it is the finding
+    the rest of this test exists to surface.
+  </div>
+
+</section>
+
+<section class="page">
+
+  <div class="section-title">
+    <span class="dot"></span> What a real gate looks like
+  </div>
+  <p class="body-text">A gate is deterministic and external to the model. One concrete shape,
+  from a content pipeline I run day to day: nothing gets marked ready to ship until a human-set
+  review status says so, and separately, two small scripts have to exit clean, pass or fail, no
+  judgment call, before the ship step is allowed to run. The model that drafted the content never
+  grades whether its own gate passed. That is what makes it a gate instead of a label: the block
+  is enforced somewhere the model cannot talk its way around.</p>
+
+  <div class="section-title">
+    <span class="dot"></span> What you now know
+  </div>
+  <p class="body-text">You either found a real gate, rare, and worth confirming twice, or you
+  found a label wearing a gate's name, common. Either way, you now know which one you are
+  running, and that is the finding an AI Workflow Audit exists to surface, just applied to one
+  step instead of your whole stack.</p>
+
+  <div class="twoup">
+    <div class="card2">
+      <div class="h">If you found a gate</div>
+      <p>Rare. Confirm it twice: check that the block is a script or a status check that runs
+      outside the model, not a status field that only looks reassuring.</p>
+    </div>
+    <div class="card2">
+      <div class="h">If you found a label</div>
+      <p>Common. The label is not a failure, it is a starting point: the same finding an AI
+      Workflow Audit exists to surface, just applied to one step instead of the whole stack.</p>
+    </div>
+  </div>
+
+  <div class="cta">
+    <div class="label">Next step</div>
+    <p class="line primary">If that test turned up a label instead of a gate, it is worth finding
+    out what else in the same workflow is a label. <a href="https://cal.com/este-val/brief">Book
+    a free 20-minute brief</a> and we will run the same test on the rest of your pipeline.</p>
+    <p class="line">Want more of this first: <a href="https://linkedin.com/in/valest">connect on
+    LinkedIn</a>.</p>
+  </div>
+
+  <div class="doc-footer">
+    <div class="who">
+      <span class="mark">EV</span>
+      <span class="name"></span>
+    </div>
+    <div class="links">
+      <a class="handle" href="https://linkedin.com/in/valest"></a>
+      <a class="booking" href="https://cal.com/este-val/brief"></a>
+    </div>
+  </div>
+
+</section>
+
+</body>
+</html>

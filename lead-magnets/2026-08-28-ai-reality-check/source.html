@@ -1,0 +1,493 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>The AI Reality Check</title>
+<style>
+  /*
+    LEAD MAGNET. Built on the house style template (_templates/lead-magnet.html, DEV-2187).
+    One-page checklist variant. Renderer: headless Chrome print-to-pdf (Skia/PDF).
+    Topic: five self-checkable signs an AI-driven number, decision, or check cannot be trusted.
+    Source content: wiki/content-ideas/2026-08/ai-reality-check-lead-magnet/lead-magnet.md (CMO-2316).
+  */
+
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  :root {
+    /* ---- House palette ---- */
+    --ink:        #241f1a;   /* body text */
+    --ink-soft:   #6b6456;   /* secondary text, hints, captions */
+    --paper:      #faf7f1;   /* page background, warm cream not white */
+    --card:       #ffffff;   /* raised surfaces: tables, boxes */
+    --line:       #e4dccd;   /* hairlines, table borders */
+
+    --accent:      #2f5d5a;  /* primary: kickers, links, rules, section dots, CTA */
+    --accent-soft: #e2ebe9;
+
+    --status-done:      #6f8f68;  /* sage: complete, covered by someone else */
+    --status-done-soft: #e7ede3;
+    --status-wait:      #b98f4f;  /* gold: pending, waiting on a third party */
+    --status-wait-soft: #f6ecd8;
+    --status-action:      #ab5d44;  /* rust: action needed, yours to do */
+    --status-action-soft: #f3e1d8;
+
+    /* ---- Identity tokens ---- */
+    --identity-byline:            "Esteban V.";
+    --identity-linkedin-url:      "https://linkedin.com/in/valest";
+    --identity-linkedin-display:  "linkedin.com/in/valest";
+    --identity-booking-url:       "https://cal.com/este-val/brief";
+    --identity-booking-display:   "cal.com/este-val/brief";
+
+    /* ---- Type ---- */
+    --font-serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    --font-sans:  "Avenir Next", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+    --fs-micro: 7.5px;
+    --fs-small: 9px;
+    --fs-body:  10.5px;
+    --fs-lead:  11.5px;
+    --fs-h2:    13px;
+    --fs-h1:    22px;
+    --fs-cover: 34px;
+
+    /* ---- Spacing ---- */
+    --sp-xs: 4px;
+    --sp-sm: 8px;
+    --sp-md: 14px;
+    --sp-lg: 22px;
+    --sp-xl: 36px;
+
+    /* ---- Geometry ---- */
+    --radius-sm: 6px;
+    --radius-md: 9px;
+    --radius-lg: 12px;
+    --radius-pill: 20px;
+    --rule: 1px solid var(--line);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html {
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    background: var(--paper);
+  }
+
+  body {
+    font-family: var(--font-serif);
+    color: var(--ink);
+    background: var(--paper);
+    font-size: var(--fs-body);
+    line-height: 1.5;
+  }
+
+  .sans { font-family: var(--font-sans); }
+
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  .page {
+    page-break-after: always;
+    min-height: 11.69in;
+    padding: 0.7in 0.8in;
+    background: var(--paper);
+  }
+  .page:last-of-type { page-break-after: avoid; }
+
+  .kicker-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--sp-sm);
+    margin-bottom: var(--sp-sm);
+  }
+  .kicker {
+    font-family: var(--font-sans);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: var(--fs-micro);
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .dateline {
+    font-family: var(--font-sans);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: var(--fs-micro);
+    color: var(--ink-soft);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  h1 {
+    font-size: var(--fs-h1);
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--ink);
+  }
+  h1.cover-title { font-size: var(--fs-cover); line-height: 1.14; }
+  h1 .accent { color: var(--accent); font-style: italic; }
+
+  .intro {
+    margin-top: var(--sp-sm);
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: var(--fs-lead);
+    line-height: 1.55;
+    max-width: 92%;
+  }
+
+  header.doc-header {
+    padding-bottom: var(--sp-md);
+    border-bottom: var(--rule);
+    margin-bottom: var(--sp-xl);
+  }
+
+  .section-title {
+    font-family: var(--font-sans);
+    font-size: var(--fs-small);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    margin: var(--sp-lg) 0 var(--sp-sm);
+    display: flex;
+    align-items: baseline;
+    gap: var(--sp-sm);
+    color: var(--accent);
+  }
+  .section-title .dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    display: inline-block; flex: 0 0 auto;
+    background: var(--accent);
+  }
+  .section-title .sub {
+    font-weight: 500;
+    text-transform: none;
+    letter-spacing: 0;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: var(--fs-small);
+    color: var(--ink-soft);
+  }
+
+  .pill {
+    font-family: var(--font-sans);
+    font-size: 7.8px;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    padding: 2.5px 9px;
+    border-radius: var(--radius-pill);
+    display: inline-block;
+    white-space: nowrap;
+    line-height: 1.3;
+  }
+  .pill.done   { background: var(--status-done-soft);   color: #4c6547; }
+  .pill.wait   { background: var(--status-wait-soft);   color: #8a5a00; }
+  .pill.action { background: var(--status-action-soft); color: #8a4128; }
+  .pill-sub {
+    display: block;
+    font-size: 8.2px;
+    color: var(--ink-soft);
+    font-style: italic;
+    margin-top: 2px;
+  }
+
+  .checklist {
+    background: var(--card);
+    border: var(--rule);
+    border-radius: var(--radius-lg);
+    padding: 14px 16px 15px;
+    margin-bottom: var(--sp-lg);
+  }
+  .checklist h3 {
+    font-family: var(--font-sans);
+    font-size: var(--fs-small);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+    margin-bottom: 3px;
+  }
+  .checklist .sub {
+    font-style: italic;
+    color: var(--ink-soft);
+    font-size: var(--fs-small);
+    margin-bottom: var(--sp-sm);
+  }
+  .checklist table { width: 100%; border-collapse: collapse; }
+  .checklist td {
+    padding: 9px 8px 9px 0;
+    vertical-align: top;
+    border-bottom: var(--rule);
+    line-height: 1.46;
+  }
+  .checklist tr:last-child td { border-bottom: none; }
+  .checklist td.box { width: 20px; padding-right: 0; }
+  .checklist .checkbox {
+    width: 13px; height: 13px;
+    border: 1.7px solid var(--accent);
+    border-radius: 4px;
+    display: inline-block;
+    margin-top: 1px;
+  }
+  .checklist td.num {
+    width: 16px;
+    font-family: var(--font-sans);
+    font-weight: 700;
+    font-size: 9px;
+    color: var(--ink-soft);
+    padding-top: 1px;
+  }
+  .checklist td.what { font-size: var(--fs-body); color: var(--ink); }
+  .checklist td.what b { font-weight: 600; }
+  .checklist td.what .hint {
+    display: block;
+    font-size: 8.7px;
+    color: var(--ink-soft);
+    font-style: italic;
+    margin-top: 1px;
+  }
+  .checklist td.status { width: 26%; text-align: right; padding-right: 0; }
+
+  /* This magnet's table is a diagnosis (Signal / What it looks like / Self-check), not an
+     owner/state row, so the third column carries a question in plain text rather than a
+     status pill (see house style note: pill vs section rule). Local-only addition, not a
+     change to the shared template. */
+  .checklist td.selfcheck {
+    width: 30%;
+    text-align: left;
+    font-size: var(--fs-small);
+    color: var(--accent);
+    font-weight: 600;
+    font-style: italic;
+    padding-left: 10px;
+    border-left: var(--rule);
+  }
+  .checklist tr.thead td {
+    font-family: var(--font-sans);
+    font-size: 7.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ink-soft);
+    padding-top: 0;
+    padding-bottom: 5px;
+    border-bottom: 1.4px solid var(--accent);
+  }
+  .checklist tr.thead td.selfcheck { border-left: var(--rule); padding-left: 10px; }
+
+  .callout {
+    border-radius: var(--radius-md);
+    padding: 12px 14px;
+    margin: var(--sp-md) 0;
+    font-size: var(--fs-small);
+    line-height: 1.55;
+  }
+  .callout.good {
+    background: var(--status-done-soft);
+    border-left: 4px solid var(--status-done);
+  }
+  .callout.good b { color: #4c6547; }
+  .callout.warn {
+    background: var(--status-wait-soft);
+    border-left: 4px solid var(--status-wait);
+  }
+  .callout.warn b { color: #8a5a00; }
+
+  .twoup { display: flex; gap: 14px; margin: var(--sp-md) 0; }
+  .twoup .card2 {
+    flex: 1 1 0;
+    background: var(--card);
+    border: var(--rule);
+    border-radius: var(--radius-md);
+    padding: 12px 14px 13px;
+  }
+  .card2 .h {
+    font-family: var(--font-sans);
+    font-size: var(--fs-h2);
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: var(--sp-xs);
+  }
+  .card2 p { font-size: var(--fs-small); line-height: 1.48; color: var(--ink-soft); }
+  .card2 p b { color: var(--ink); }
+
+  .cta {
+    margin-top: var(--sp-xl);
+    background: var(--accent-soft);
+    border: 1px solid var(--accent);
+    border-radius: var(--radius-lg);
+    padding: 15px 18px 17px;
+  }
+  .cta .label {
+    font-family: var(--font-sans);
+    font-size: var(--fs-small);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  .cta .line {
+    font-size: var(--fs-body);
+    line-height: 1.5;
+    margin-bottom: 4px;
+  }
+  .cta .line.primary { font-weight: 500; }
+  .cta .line:last-child { margin-bottom: 0; }
+  .cta a { font-weight: 700; }
+
+  .doc-footer {
+    margin-top: var(--sp-lg);
+    padding-top: var(--sp-sm);
+    border-top: var(--rule);
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    font-family: var(--font-sans);
+    font-size: var(--fs-micro);
+    color: var(--ink-soft);
+  }
+  .doc-footer .mark {
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    border: 1.3px solid var(--accent);
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 7.5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 6px;
+  }
+  .doc-footer .who { display: flex; align-items: center; }
+  .doc-footer .name { font-weight: 700; color: var(--ink); }
+  .doc-footer .name::before { content: var(--identity-byline); }
+  .doc-footer .links {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+  }
+  .doc-footer .handle { color: var(--accent); }
+  .doc-footer .handle::before { content: var(--identity-linkedin-display); }
+  .doc-footer .booking { color: var(--accent); }
+  .doc-footer .booking::before { content: var(--identity-booking-display); }
+</style>
+</head>
+<body>
+
+<section class="page">
+
+  <header class="doc-header">
+    <div class="kicker-row">
+      <div class="kicker">The AI Reality Check</div>
+      <div class="dateline">Aug 2026</div>
+    </div>
+    <h1>Five signs your AI is <span class="accent">lying</span> to you</h1>
+    <p class="intro">Run this in the next twenty minutes, on your own stack, before you trust the
+    next number it hands you.</p>
+  </header>
+
+  <div class="checklist">
+    <h3>Trace each one against your own stack</h3>
+    <div class="sub">Check the box only after you have actually traced it, not after you have
+    thought about it.</div>
+    <table>
+      <tr class="thead">
+        <td class="box"></td>
+        <td class="num"></td>
+        <td class="what">Signal &amp; what it looks like</td>
+        <td class="selfcheck">Self-check</td>
+      </tr>
+      <tr>
+        <td class="box"><span class="checkbox"></span></td>
+        <td class="num">1</td>
+        <td class="what"><b>Model does the arithmetic.</b><span class="hint">Model outputs a
+        total, score, or forecast. If a model computes it, you have a silent-error generator with
+        no seam between reading and computing.</span></td>
+        <td class="selfcheck">Trace one number in your report: model, or code?</td>
+      </tr>
+      <tr>
+        <td class="box"><span class="checkbox"></span></td>
+        <td class="num">2</td>
+        <td class="what"><b>A decision you can't explain.</b><span class="hint">Only answer is
+        "the model judged it." You cannot defend a decision, or debug it, with no rule to point
+        at.</span></td>
+        <td class="selfcheck">Name the exact rule behind one automated decision.</td>
+      </tr>
+      <tr>
+        <td class="box"><span class="checkbox"></span></td>
+        <td class="num">3</td>
+        <td class="what"><b>A green check that never fails.</b><span class="hint">Your top test
+        has never once failed. It may be measuring something adjacent to what you actually care
+        about.</span></td>
+        <td class="selfcheck">When did that check last actually fail? Never?</td>
+      </tr>
+      <tr>
+        <td class="box"><span class="checkbox"></span></td>
+        <td class="num">4</td>
+        <td class="what"><b>A finding with no citation.</b><span class="hint">A claim ships with
+        no source line attached. Treat it as a hallucination until proven otherwise, grounding is
+        not a nicety.</span></td>
+        <td class="selfcheck">Pick one AI claim: does it name where it came from?</td>
+      </tr>
+      <tr>
+        <td class="box"><span class="checkbox"></span></td>
+        <td class="num">5</td>
+        <td class="what"><b>Shipped and never re-read.</b><span class="hint">Finished output
+        nobody has reopened since. Finished reads as correct, it usually isn't re-checked, which
+        is exactly where errors hide.</span></td>
+        <td class="selfcheck">Name one deliverable this quarter you never reopened.</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="callout warn">
+    <b>Self-tally: how many of the five did you just fail?</b> Zero is rare. One is normal.
+    Three or more means something in your stack is quietly wrong right now, not hypothetically.
+  </div>
+
+  <div class="twoup">
+    <div class="card2">
+      <div class="h">Why this matters more than it feels like</div>
+      <p>None of these five require an AI expert to catch. They require someone willing to trace
+      one number, one decision, or one claim back to where it actually came from, instead of
+      trusting the output because it looks finished.</p>
+    </div>
+    <div class="card2">
+      <div class="h">What a passing stack looks like</div>
+      <p>The arithmetic runs in code, not the model. Every automated decision has a rule you can
+      point to. The tests that matter have failed at least once. Every claim carries a source.
+      Every deliverable gets reopened.</p>
+    </div>
+  </div>
+
+  <div class="cta">
+    <div class="label">Next step</div>
+    <p class="line primary">If you scored two or more, that is not bad luck, it is a pattern I
+    have already found once in someone else's pipeline this month. <a
+    href="https://cal.com/este-val/brief">Book a free 20-minute brief</a> and bring your worst
+    one, we will trace it live.</p>
+    <p class="line">Want more of this first: <a href="https://linkedin.com/in/valest">connect on
+    LinkedIn</a>.</p>
+  </div>
+
+  <div class="doc-footer">
+    <div class="who">
+      <span class="mark">EV</span>
+      <span class="name"></span>
+    </div>
+    <div class="links">
+      <a class="handle" href="https://linkedin.com/in/valest"></a>
+      <a class="booking" href="https://cal.com/este-val/brief"></a>
+    </div>
+  </div>
+
+</section>
+
+</body>
+</html>
