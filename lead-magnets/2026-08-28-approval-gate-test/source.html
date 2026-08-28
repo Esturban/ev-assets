@@ -172,46 +172,61 @@
     font-size: var(--fs-lead);
     line-height: 1.65;
     color: var(--ink);
-    margin-bottom: var(--sp-md);
+    margin-bottom: var(--sp-lg);
   }
 
-  .twoup { display: flex; gap: 14px; margin: var(--sp-md) 0 var(--sp-lg); }
+  .twoup { display: flex; gap: 18px; margin: var(--sp-lg) 0 var(--sp-xl); }
   .twoup .card2 {
     flex: 1 1 0;
     background: var(--card);
     border: var(--rule);
     border-radius: var(--radius-md);
-    padding: 12px 14px 13px;
+    padding: 15px 17px 16px;
   }
   .card2 .h {
     font-family: var(--font-sans);
     font-size: var(--fs-h2);
     font-weight: 700;
     color: var(--ink);
-    margin-bottom: var(--sp-xs);
+    margin-bottom: var(--sp-sm);
   }
-  .card2 p { font-size: var(--fs-small); line-height: 1.55; color: var(--ink-soft); }
+  .card2 p { font-size: var(--fs-body); line-height: 1.6; color: var(--ink-soft); }
   .card2 p b { color: var(--ink); }
 
+  /* Pull-quote: restates one sentence already present in the running text, set larger
+     for emphasis. No new copy, reuses existing type-scale tokens (fs-h2, accent, sp-md/lg). */
+  .pull-quote {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: var(--fs-h2);
+    line-height: 1.55;
+    color: var(--accent);
+    background: var(--accent-soft);
+    border-left: 4px solid var(--accent);
+    border-radius: var(--radius-md);
+    padding: var(--sp-lg) var(--sp-lg);
+    margin: var(--sp-xl) 0 var(--sp-xl);
+  }
+
   ol.test-steps {
-    margin: var(--sp-md) 0 var(--sp-lg) 20px;
+    margin: var(--sp-lg) 0 var(--sp-xl) 20px;
     padding: 0;
   }
   ol.test-steps li {
-    font-size: var(--fs-body);
-    line-height: 1.6;
+    font-size: var(--fs-lead);
+    line-height: 1.65;
     color: var(--ink);
-    margin-bottom: 5px;
+    margin-bottom: 9px;
     padding-left: 4px;
   }
   ol.test-steps li b { color: var(--accent); }
 
   .callout {
     border-radius: var(--radius-md);
-    padding: 13px 15px;
-    margin: var(--sp-md) 0;
-    font-size: var(--fs-body);
-    line-height: 1.55;
+    padding: 16px 19px;
+    margin: var(--sp-lg) 0;
+    font-size: var(--fs-lead);
+    line-height: 1.6;
   }
   .callout.good {
     background: var(--status-done-soft);
@@ -229,7 +244,7 @@
     background: var(--accent-soft);
     border: 1px solid var(--accent);
     border-radius: var(--radius-lg);
-    padding: 15px 18px 17px;
+    padding: 22px 25px 24px;
   }
   .cta .label {
     font-family: var(--font-sans);
@@ -238,12 +253,12 @@
     text-transform: uppercase;
     letter-spacing: 0.14em;
     color: var(--accent);
-    margin-bottom: 6px;
+    margin-bottom: 8px;
   }
   .cta .line {
-    font-size: var(--fs-body);
-    line-height: 1.5;
-    margin-bottom: 4px;
+    font-size: var(--fs-lead);
+    line-height: 1.55;
+    margin-bottom: 6px;
   }
   .cta .line.primary { font-weight: 500; }
   .cta .line:last-child { margin-bottom: 0; }
@@ -349,6 +364,9 @@
   approval." The label is the whole feature. A real gate is different: it is a check that runs
   outside the model's own judgment, and the action cannot proceed until that check passes.</p>
 
+  <div class="pull-quote">"A real gate is different: it is a check that runs outside the
+  model's own judgment, and the action cannot proceed until that check passes."</div>
+
   <div class="twoup">
     <div class="card2">
       <div class="h">A label</div>
@@ -379,6 +397,17 @@
     the rest of this test exists to surface.
   </div>
 
+  <div class="doc-footer">
+    <div class="who">
+      <span class="mark">EV</span>
+      <span class="name"></span>
+    </div>
+    <div class="links">
+      <a class="handle" href="https://linkedin.com/in/valest"></a>
+      <a class="booking" href="https://cal.com/este-val/brief"></a>
+    </div>
+  </div>
+
 </section>
 
 <section class="page">
@@ -392,6 +421,9 @@
   judgment call, before the ship step is allowed to run. The model that drafted the content never
   grades whether its own gate passed. That is what makes it a gate instead of a label: the block
   is enforced somewhere the model cannot talk its way around.</p>
+
+  <div class="pull-quote">"The block is enforced somewhere the model cannot talk its way
+  around."</div>
 
   <div class="section-title">
     <span class="dot"></span> What you now know
@@ -412,6 +444,11 @@
       <p>Common. The label is not a failure, it is a starting point: the same finding an AI
       Workflow Audit exists to surface, just applied to one step instead of the whole stack.</p>
     </div>
+  </div>
+
+  <div class="callout good">
+    <b>The model that drafted the content never grades whether its own gate passed.</b> A gate
+    is deterministic and external to the model.
   </div>
 
   <div class="cta">
