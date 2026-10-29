@@ -1,0 +1,7 @@
+Workflow,Runs per week,Repetitiveness 1-5,Volume 1-5,Text intensity 1-5,Score,Verdict
+Example: triaging inbound support emails,600,5,5,5,"=IF(COUNT(C2:E2)<3,"""",C2*D2*E2)","=IF(F2="""","""",IF(F2>=60,""Build"",IF(F2>=30,""Human in loop"",""Skip"")))"
+Your workflow 1,,,,,"=IF(COUNT(C3:E3)<3,"""",C3*D3*E3)","=IF(F3="""","""",IF(F3>=60,""Build"",IF(F3>=30,""Human in loop"",""Skip"")))"
+Your workflow 2,,,,,"=IF(COUNT(C4:E4)<3,"""",C4*D4*E4)","=IF(F4="""","""",IF(F4>=60,""Build"",IF(F4>=30,""Human in loop"",""Skip"")))"
+Your workflow 3,,,,,"=IF(COUNT(C5:E5)<3,"""",C5*D5*E5)","=IF(F5="""","""",IF(F5>=60,""Build"",IF(F5>=30,""Human in loop"",""Skip"")))"
+Your workflow 4,,,,,"=IF(COUNT(C6:E6)<3,"""",C6*D6*E6)","=IF(F6="""","""",IF(F6>=60,""Build"",IF(F6>=30,""Human in loop"",""Skip"")))"
+Your workflow 5,,,,,"=IF(COUNT(C7:E7)<3,"""",C7*D7*E7)","=IF(F7="""","""",IF(F7>=60,""Build"",IF(F7>=30,""Human in loop"",""Skip"")))"
