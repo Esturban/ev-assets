@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AI Agent Guardrails Checklist</title>
+<style>
+  /*
+    LEAD MAGNET. House style template. Two-page checklist variant.
+    Renderer: headless Chrome print-to-pdf (Skia/PDF).
+  */
+  @page { size: A4; margin: 0; }
+  :root {
+    --ink:#241f1a; --ink-soft:#6b6456; --paper:#faf7f1; --card:#ffffff; --line:#e4dccd;
+    --accent:#2f5d5a; --accent-soft:#e2ebe9;
+    --status-done:#6f8f68; --status-done-soft:#e7ede3;
+    --status-wait:#b98f4f; --status-wait-soft:#f6ecd8;
+    --status-action:#ab5d44; --status-action-soft:#f3e1d8;
+    --identity-byline:"Esteban V.";
+    --identity-linkedin-url:"https://linkedin.com/in/valest";
+    --identity-linkedin-display:"linkedin.com/in/valest";
+    --identity-booking-url:"https://cal.com/este-val/audit-fit-call";
+    --identity-booking-display:"cal.com/este-val/audit-fit-call";
+    --font-serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    --font-sans:"Avenir Next","Helvetica Neue",Helvetica,Arial,sans-serif;
+    --fs-micro:7.5px; --fs-small:9px; --fs-body:10px; --fs-lead:10.5px; --fs-h1:21px;
+    --sp-xs:4px; --sp-sm:8px; --sp-md:12px; --sp-lg:16px;
+    --radius-md:9px; --radius-lg:12px; --radius-pill:20px;
+    --rule:1px solid var(--line);
+  }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html { -webkit-print-color-adjust:exact; print-color-adjust:exact; background:var(--paper); }
+  body { font-family:var(--font-serif); color:var(--ink); background:var(--paper); font-size:var(--fs-body); line-height:1.4; }
+  a { color:var(--accent); text-decoration:none; }
+  .page { height:11.69in; overflow:hidden; page-break-after:always; padding:0.5in 0.65in; background:var(--paper); }
+  .page:last-of-type { page-break-after:avoid; }
+  .kicker-row { display:flex; align-items:baseline; justify-content:space-between; margin-bottom:var(--sp-sm); }
+  .kicker { font-family:var(--font-sans); text-transform:uppercase; letter-spacing:.18em; font-size:var(--fs-micro); color:var(--accent); font-weight:600; }
+  .dateline { font-family:var(--font-sans); text-transform:uppercase; letter-spacing:.12em; font-size:var(--fs-micro); color:var(--ink-soft); font-weight:500; }
+  h1 { font-size:var(--fs-h1); font-weight:600; line-height:1.2; }
+  h1 .accent { color:var(--accent); font-style:italic; }
+  .intro { margin-top:var(--sp-sm); font-style:italic; color:var(--ink-soft); font-size:var(--fs-lead); line-height:1.5; }
+  header.doc-header { padding-bottom:var(--sp-md); border-bottom:var(--rule); margin-bottom:var(--sp-md); }
+  .pill { font-family:var(--font-sans); font-size:7px; font-weight:700; letter-spacing:.02em; text-transform:uppercase; padding:2px 7px; border-radius:var(--radius-pill); display:inline-block; line-height:1.3; background:var(--accent-soft); color:var(--accent); }
+  .checklist { background:var(--card); border:var(--rule); border-radius:var(--radius-lg); padding:4px 12px; }
+  .checklist table { width:100%; border-collapse:collapse; }
+  .checklist td { padding:6px 6px 6px 0; vertical-align:top; border-bottom:var(--rule); }
+  .checklist tr:last-child td { border-bottom:none; }
+  td.num { width:18px; font-family:var(--font-sans); font-weight:700; font-size:10px; color:var(--ink-soft); padding-top:2px; }
+  td.box { width:40px; }
+  .yn { display:flex; align-items:center; gap:4px; font-family:var(--font-sans); font-size:7.5px; font-weight:600; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.06em; margin-bottom:3px; }
+  .yn i { width:11px; height:11px; border:1.6px solid var(--accent); border-radius:3px; display:inline-block; }
+  td.what b { font-weight:600; font-size:10.3px; display:block; }
+  .area { display:block; font-family:var(--font-sans); font-size:7px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); margin-bottom:1px; }
+  .hint { display:block; font-size:8.7px; color:var(--ink-soft); font-style:italic; margin-top:1px; line-height:1.38; }
+  td.tag { width:17%; text-align:right; padding-right:0; }
+  .section-title { font-family:var(--font-sans); font-size:var(--fs-small); font-weight:700; text-transform:uppercase; letter-spacing:.16em; margin:var(--sp-md) 0 var(--sp-sm); color:var(--accent); }
+  .verdicts { display:flex; flex-direction:column; gap:6px; }
+  .callout { border-radius:var(--radius-md); padding:7px 11px; font-size:9.3px; line-height:1.42; }
+  .callout.good { background:var(--status-done-soft); border-left:4px solid var(--status-done); }
+  .callout.good b { color:#4c6547; }
+  .callout.warn { background:var(--status-wait-soft); border-left:4px solid var(--status-wait); }
+  .callout.warn b { color:#8a5a00; }
+  .callout.bad { background:var(--status-action-soft); border-left:4px solid var(--status-action); }
+  .callout.bad b { color:#8a4128; }
+  .callout a { font-weight:700; }
+  .sources { margin-top:var(--sp-md); padding-top:6px; border-top:var(--rule); font-family:var(--font-sans); font-size:7.3px; color:var(--ink-soft); line-height:1.5; }
+  .sources b { color:var(--ink); }
+  .sources span { display:block; }
+  .doc-footer { margin-top:var(--sp-md); padding-top:var(--sp-sm); border-top:var(--rule); display:flex; align-items:flex-end; justify-content:space-between; font-family:var(--font-sans); font-size:var(--fs-micro); color:var(--ink-soft); }
+  .doc-footer .mark { width:16px; height:16px; border-radius:50%; border:1.3px solid var(--accent); color:var(--accent); font-weight:700; font-size:7.5px; display:inline-flex; align-items:center; justify-content:center; margin-right:6px; }
+  .doc-footer .who { display:flex; align-items:center; }
+  .doc-footer .name { font-weight:700; color:var(--ink); }
+  .doc-footer .name::before { content:var(--identity-byline); }
+  .doc-footer .links { display:flex; flex-direction:column; align-items:flex-end; gap:2px; }
+  .doc-footer .handle::before { content:var(--identity-linkedin-display); }
+  .doc-footer .booking::before { content:var(--identity-booking-display); }
+</style>
+</head>
+<body>
+
+<section class="page">
+  <header class="doc-header">
+    <div class="kicker-row">
+      <div class="kicker">A working checklist</div>
+      <div class="dateline">Oct 2026</div>
+    </div>
+    <h1>The <span class="accent">AI Agent Guardrails</span> Checklist</h1>
+    <p class="intro">Fifteen yes/no checks a CTO or CISO can answer about their own AI agents today, without opening a repo. Run them in order. Answer "yes" only if you could show the evidence to an auditor this week. If you are unsure, the answer is "no". Tags name the NIST AI RMF function (Govern, Map, Measure, Manage) or the OWASP Top 10 for LLM Applications risk each check addresses.</p>
+  </header>
+  <div class="checklist"><table><tr><td class="num">1</td><td class="box"><span class="yn"><i></i>Yes</span><span class="yn"><i></i>No</span></td>
+<td class="what"><span class="area">Inventory</span><b>Do you have a written list of every AI agent and LLM feature in use, each with a named owner?</b><span class="hint">one list that includes vendor copilots, internal bots and shadow tools staff signed up for, plus the person accountable for each. A list that only covers what IT approved is a &quot;no&quot;.</span></td><td class="tag"><span class="pill">NIST AI RMF, Map</span></td></tr><tr><td class="num">2</td><td class="box"><span class="yn"><i></i>Yes</span><span class="yn"><i></i>No</span></td>
+<td class="what"><span class="area">Inventory</span><b>Has each agent on that list been rated for how bad its worst failure would be?</b><span class="hint">a simple high, medium or low rating per agent, based on what it can touch (money, customer data, public output, production systems), agreed by the owner and someone from security.</span></td><td class="tag"><span class="pill">NIST AI RMF, Map</span></td></tr><tr><td class="num">3</td><td class="box"><span class="yn"><i></i>Yes</span><span class="yn"><i></i>No</span></td>
+<td class="what"><span class="area">Data reach</span><b>Can you name every data source each agent can read, and is that limited to what its task needs?</b><span class="hint">a short per-agent list of systems, folders and databases it can reach. &quot;It has the same access as the user who runs it&quot; or &quot;it can search the whole drive&quot; is a &quot;no&quot;.</span></td><td class="tag"><span class="pill">OWASP LLM, Sensitive Information Disclosure</span></td></tr><tr><td class="num">4</td><td class="box"><span class="yn"><i></i>Yes</span><span class="yn"><i></i>No</span></td>
+<td class="what"><span class="area">Tool permissions</span><b>Does each agent hold only the tools and permissions its task requires, with no shared admin account?</b><span class="hint">per-agent accounts or scoped keys, no agent running under an admin or service account shared with people, and no write or delete rights it does not use.</span></td><td class="tag"><span class="pill">OWASP LLM, Excessive Agency</span></td></tr><tr><td class="num">5</td><td class="box"><span class="yn"><i></i>Yes</span><span class="yn"><i></i>No</span></td>
+<td class="what"><span class="area">Tool permissions</span><b>Are agent credentials short-lived and can each agent reach only an approved list of outside sites?</b><span class="hint">keys that expire on their own rather than one long-lived key in a settings file, and outbound access blocked by default with named exceptions.</span></td><td class="tag"><span class="pill">NIST AI RMF, Manage</span></td></tr><tr><td class="num">6</td><td class="box"><span class="yn"><i></i>Yes</span><span class="yn"><i></i>No</span></td>
+<td class="what"><span class="area">Approval gates</span><b>Does a named human approve before any agent takes an action that is hard to undo?</b><span class="hint">a written list of gated actions (payments, deletions, sending email or messages outside the company, changing production settings) and proof the gate is enforced by the system, not by a line in the prompt.</span></td><td class="tag"><span class="pill">OWASP LLM, Excessive Agency</span></td></tr><tr><td class="num">7</td><td class="box"><span class="yn"><i></i>Yes</span><span class="yn"><i></i>No</span></td>
+<td class="what"><span class="area">Approval gates</span><b>If the approver does not respond in time, does the request default to &quot;deny&quot;?</b><span class="hint">a set response window per risk level, a backup reviewer, and a timeout that blocks the action rather than letting it through. The requester must never be able to approve their own request.</span></td><td class="tag"><span class="pill">NIST AI RMF, Manage</span></td></tr><tr><td class="num">8</td><td class="box"><span class="yn"><i></i>Yes</span><span class="yn"><i></i>No</span></td>
+<td class="what"><span class="area">Refusal behaviour</span><b>Does each agent refuse out-of-scope or rule-breaking requests, including instructions hidden inside documents, emails or web pages it reads?</b><span class="hint">a test in the last 90 days where someone planted an instruction in content the agent processes and the agent ignored it and gave a consistent refusal.</span></td><td class="tag"><span class="pill">OWASP LLM, Prompt Injection</span></td></tr></table></div>
+</section>
+
+<section class="page">
+  <div class="checklist"><table><tr><td class="num">9</td><td class="box"><span class="yn"><i></i>Yes</span><span class="yn"><i></i>No</span></td>
+<td class="what"><span class="area">Refusal behaviour</span><b>Is agent output checked before it reaches another system, a customer or a public channel?</b><span class="hint">a review step or automatic filter between the model&#x27;s answer and the place it lands, so a wrong or harmful answer is caught before anyone acts on it.</span></td><td class="tag"><span class="pill">OWASP LLM, Improper Output Handling</span></td></tr><tr><td class="num">10</td><td class="box"><span class="yn"><i></i>Yes</span><span class="yn"><i></i>No</span></td>
+<td class="what"><span class="area">Logging</span><b>Is every agent decision and every human override recorded with who, when and why, in a place the agent and its operators cannot edit?</b><span class="hint">you can pull the record for one decision from last month in under ten minutes, and overrides carry a named person and a written reason.</span></td><td class="tag"><span class="pill">NIST AI RMF, Measure</span></td></tr><tr><td class="num">11</td><td class="box"><span class="yn"><i></i>Yes</span><span class="yn"><i></i>No</span></td>
+<td class="what"><span class="area">Rollback</span><b>Can you switch off any agent, or put it back to its last known good version, within one hour?</b><span class="hint">a named person with the authority to do it, a kill switch or version pin that does not need a code release, and a practice run in the last six months.</span></td><td class="tag"><span class="pill">NIST AI RMF, Manage</span></td></tr><tr><td class="num">12</td><td class="box"><span class="yn"><i></i>Yes</span><span class="yn"><i></i>No</span></td>
+<td class="what"><span class="area">Red-team</span><b>Has someone tried to break each high-risk agent in the last 90 days, using test data rather than live customer data?</b><span class="hint">a dated record of attempts at jailbreaks, data extraction and misuse of its tools, what got through, and what was fixed. &quot;The vendor tested it&quot; is a &quot;no&quot;.</span></td><td class="tag"><span class="pill">NIST AI RMF, Measure</span></td></tr><tr><td class="num">13</td><td class="box"><span class="yn"><i></i>Yes</span><span class="yn"><i></i>No</span></td>
+<td class="what"><span class="area">PII</span><b>Is personal data removed or masked before it reaches the model whenever the task does not need it?</b><span class="hint">names, ID numbers, account numbers and health details stripped or masked on the way in, and logs that record the decision without storing the personal data itself.</span></td><td class="tag"><span class="pill">OWASP LLM, Sensitive Information Disclosure</span></td></tr><tr><td class="num">14</td><td class="box"><span class="yn"><i></i>Yes</span><span class="yn"><i></i>No</span></td>
+<td class="what"><span class="area">Vendor retention</span><b>Do you know, in writing, how long each model vendor keeps your prompts and outputs, and whether it trains on them?</b><span class="hint">the contract or data processing terms for each vendor, with retention period, training opt-out status and the region where data is stored. A marketing page is not enough.</span></td><td class="tag"><span class="pill">OWASP LLM, Supply Chain</span></td></tr><tr><td class="num">15</td><td class="box"><span class="yn"><i></i>Yes</span><span class="yn"><i></i>No</span></td>
+<td class="what"><span class="area">Vendor retention</span><b>Have you set a retention period for your own prompts, outputs and agent logs that matches your legal obligations?</b><span class="hint">a written period per log type, signed off by legal or compliance, and automatic deletion when it ends.</span></td><td class="tag"><span class="pill">NIST AI RMF, Govern</span></td></tr></table></div>
+
+  <div class="section-title">Your score: count your "no" answers</div>
+  <div class="verdicts">
+    <div class="callout good"><b>0 to 2 "no": Guarded.</b> Your basics are in place. Recheck every quarter and after any new agent goes live.</div>
+    <div class="callout warn"><b>3 to 6 "no": Gaps to close.</b> Pick the "no" with the highest-risk agent behind it and fix it this month, starting with approval gates (6, 7) and rollback (11).</div>
+    <div class="callout bad"><b>7 or more "no": Exposed.</b> Your agents can act, read or leak more than you can see or stop. The AI Security Posture Audit maps every agent against the NIST AI RMF and the OWASP Top 10 for LLM Applications in 10 business days and hands you a ranked fix list. Book a fit call: <a style="white-space:nowrap" href="https://cal.com/este-val/audit-fit-call">https://cal.com/este-val/audit-fit-call</a></div>
+  </div>
+
+  <div class="sources">
+    <b>Sources</b>
+    <span>NIST AI Risk Management Framework: <a href="https://www.nist.gov/itl/ai-risk-management-framework">https://www.nist.gov/itl/ai-risk-management-framework</a></span>
+    <span>NIST AI 100-1, AI Risk Management Framework 1.0: <a href="https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf">https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.100-1.pdf</a></span>
+    <span>NIST AI 600-1, Generative AI Profile: <a href="https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf">https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf</a></span>
+    <span>OWASP Top 10 for LLM Applications 2025: <a href="https://genai.owasp.org/llm-top-10/">https://genai.owasp.org/llm-top-10/</a></span>
+  </div>
+
+  <div class="doc-footer">
+    <div class="who"><span class="mark">EV</span><span class="name"></span></div>
+    <div class="links">
+      <a class="handle" href="https://linkedin.com/in/valest"></a>
+      <a class="booking" href="https://cal.com/este-val/audit-fit-call"></a>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
